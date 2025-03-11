@@ -89,7 +89,7 @@ MAISON is a beautifully designed, modern e-commerce platform built with **Next.j
 
 ## 📸 Screenshots
 
-<div align="center">
+<div align="center flex flex-col">
   <img src="public/Screenshot 2025-03-11 204319.png" alt="Homepage" width="45%">
   <img src="public/Screenshot 2025-03-11 204327.png" alt="Shopping Cart" width="45%">
   <br>
