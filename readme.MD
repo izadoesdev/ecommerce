@@ -1,4 +1,4 @@
-Here’s a polished `README.md` for your project based on the context from `package.json` and the project structure:
+Here's a polished `README.md` for your project based on the context from `package.json` and the project structure:
 
 ```markdown
 # MAISON - Modern E-commerce Platform
@@ -88,6 +88,17 @@ MAISON is a beautifully designed, modern e-commerce platform built with **Next.j
 
 ---
 
+## 📸 Screenshots
+
+<div align="center">
+  <img src="public/Screenshot 2025-03-11 204319.png" alt="Homepage" width="45%">
+  <img src="public/Screenshot 2025-03-11 204327.png" alt="Shopping Cart" width="45%">
+  <br>
+  <img src="public/Screenshot 2025-03-11 204338.png" alt="Filters / Shop" width="45%">
+</div>
+
+---
+
 ## 📂 Folder Structure
 
 ```
@@ -117,7 +128,7 @@ maison/
 
 ## 🤝 Contributing
 
-We welcome contributions! Here’s how you can help:
+We welcome contributions! Here's how you can help:
 
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature/AmazingFeature`).
