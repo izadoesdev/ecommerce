@@ -1,6 +1,5 @@
 Here's a polished `README.md` for your project based on the context from `package.json` and the project structure:
 
-```markdown
 # MAISON - Modern E-commerce Platform
 
 MAISON is a beautifully designed, modern e-commerce platform built with **Next.js**, **Tailwind CSS**, and **Radix UI**. It offers a seamless shopping experience with a focus on performance, accessibility, and user experience.
@@ -154,5 +153,3 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 - All the open-source contributors of the dependencies used in this project.
 
 ---
-
-```
