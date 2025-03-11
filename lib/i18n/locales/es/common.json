@@ -1,0 +1,155 @@
+{
+  "language": {
+    "en": "Inglés",
+    "fr": "Francés",
+    "es": "Español",
+    "ar": "Árabe"
+  },
+  "nav": {
+    "home": "Inicio",
+    "shop": "Tienda",
+    "decor": "Decoración",
+    "furniture": "Muebles",
+    "kitchen": "Cocina",
+    "textiles": "Textiles",
+    "account": "Mi Cuenta",
+    "wishlist": "Favoritos"
+  },
+  "home": {
+    "heroTitle": "Crea un Espacio Que Se Sienta Como Tu Hogar",
+    "heroSubtitle": "Descubre nuestra colección de decoración y muebles para tu estilo de vida moderno.",
+    "shopNow": "Comprar Ahora",
+    "newArrivals": "Novedades",
+    "newArrivalsSubtitle": "Las últimas incorporaciones a nuestra colección",
+    "shopByCategory": "Comprar por Categoría",
+    "categorySubtitle": "Explora nuestras colecciones por habitación o estilo",
+    "viewAllCategories": "Ver Todas las Categorías",
+    "exploreCategory": "Explorar",
+    "featuredProducts": "Productos Destacados",
+    "featuredSubtitle": "Seleccionados por nuestro equipo de diseño",
+    "newCollection": "Nueva Colección",
+    "trending": "Tendencias Actuales",
+    "livingRoom": "Muebles de Sala",
+    "livingRoomDesc": "Crea un espacio acogedor y elegante con nuestra colección de muebles seleccionados.",
+    "kitchenware": "Esenciales de Cocina",
+    "kitchenwareDesc": "Mejora tu experiencia culinaria con nuestros accesorios de cocina premium.",
+    "shopCollection": "Ver Colección",
+    "testimonials": "Lo Que Dicen Nuestros Clientes",
+    "testimonialsSubtitle": "Lee las opiniones de nuestros clientes satisfechos",
+    "testimonial1": "Me encanta absolutamente la calidad de los muebles que compré. La atención al detalle es notable, y ha transformado completamente mi sala de estar.",
+    "testimonial2": "Los jarrones de cerámica que pedí son aún más hermosos en persona. El envío fue rápido y todo llegó perfectamente empaquetado.",
+    "testimonial3": "MAISON tiene el mejor servicio al cliente que he experimentado. Me ayudaron a elegir las piezas perfectas para mi nuevo apartamento, y no podría estar más feliz.",
+    "onSale": "En Oferta",
+    "onSaleSubtitle": "Ofertas por tiempo limitado en artículos seleccionados",
+    "stayUpdated": "Mantente Actualizado",
+    "stayUpdatedDesc": "Suscríbete a nuestro boletín para ofertas exclusivas, consejos de diseño y novedades.",
+    "emailPlaceholder": "Tu dirección de email",
+    "subscribe": "Suscribirse"
+  },
+  "product": {
+    "sale": "Oferta",
+    "new": "Nuevo",
+    "viewAll": "Ver Todo",
+    "addToCart": "Añadir al Carrito",
+    "added": "Añadido al Carrito",
+    "inCart": "En el Carrito",
+    "loadMore": "Cargar Más",
+    "noProducts": "No se encontraron productos.",
+    "item": "artículo",
+    "items": "artículos",
+    "sortBy": "Ordenar por",
+    "wishlist": "Añadir a Favoritos",
+    "quickView": "Vista Rápida",
+    "details": "Detalles",
+    "material": "Material",
+    "dimensions": "Dimensiones",
+    "care": "Cuidado",
+    "youMayAlsoLike": "También te puede gustar",
+    "sort": {
+      "newest": "Más reciente",
+      "price-low-high": "Precio: Menor a Mayor",
+      "price-high-low": "Precio: Mayor a Menor",
+      "name-a-z": "Nombre: A a Z",
+      "name-z-a": "Nombre: Z a A"
+    }
+  },
+  "category": {
+    "all": {
+      "name": "Todos los Productos",
+      "description": "Explora nuestra colección completa de artículos para el hogar"
+    },
+    "decor": {
+      "name": "Decoración",
+      "description": "Hermosos accesorios para mejorar tu hogar"
+    },
+    "furniture": {
+      "name": "Muebles",
+      "description": "Muebles elegantes y funcionales para cada habitación"
+    },
+    "textiles": {
+      "name": "Textiles",
+      "description": "Telas suaves para añadir comodidad y estilo"
+    },
+    "kitchen": {
+      "name": "Cocina",
+      "description": "Herramientas esenciales para cocinar y cenar"
+    },
+    "new-arrivals": {
+      "name": "Novedades",
+      "description": "Las últimas incorporaciones a nuestra colección"
+    }
+  },
+  "cart": {
+    "title": "Carrito de Compras",
+    "empty": "Tu carrito está vacío",
+    "emptyMessage": "Parece que aún no has añadido productos a tu carrito.",
+    "continueShopping": "Continuar Comprando",
+    "orderSummary": "Resumen del Pedido",
+    "subtotal": "Subtotal",
+    "shipping": "Envío",
+    "freeShipping": "Gratis",
+    "tax": "Impuesto (10%)",
+    "total": "Total",
+    "checkout": "Finalizar Compra",
+    "processing": "Procesando...",
+    "clearCart": "Vaciar Carrito",
+    "remove": "Eliminar"
+  },
+  "search": {
+    "placeholder": "Buscar productos...",
+    "results": "Resultados de búsqueda",
+    "resultsFor": "resultados para",
+    "noResults": "No se encontraron resultados para"
+  },
+  "error": {
+    "notFound": "Página No Encontrada",
+    "notFoundMessage": "La página que estás buscando puede haber sido eliminada, ha cambiado de nombre o no está disponible temporalmente.",
+    "returnHome": "Volver al Inicio"
+  },
+  "footer": {
+    "storeDescription": "MAISON ofrece una selección de decoración, muebles y accesorios modernos para personas conscientes del diseño.",
+    "shop": "Tienda",
+    "allProducts": "Todos los Productos",
+    "decor": "Decoración",
+    "furniture": "Muebles",
+    "kitchen": "Cocina",
+    "textiles": "Textiles",
+    "company": "Empresa",
+    "aboutUs": "Sobre Nosotros",
+    "contactUs": "Contáctanos",
+    "blog": "Blog",
+    "careers": "Carreras",
+    "newsletter": "Boletín",
+    "newsletterDesc": "Suscríbete para recibir actualizaciones sobre nuevos productos y ofertas especiales.",
+    "emailPlaceholder": "Tu email",
+    "subscribe": "Suscribirse",
+    "address": "123 Calle Diseño, Madrid, 28001, España",
+    "phone": "+34 91 234 56 78",
+    "email": "hola@maison.com",
+    "copyright": "© 2023 MAISON. Todos los derechos reservados.",
+    "privacyPolicy": "Política de Privacidad",
+    "termsOfService": "Términos de Servicio",
+    "shippingPolicy": "Política de Envío"
+  }
+}
+
