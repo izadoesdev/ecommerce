@@ -6,6 +6,15 @@ MAISON is a beautifully designed, modern e-commerce platform built with **Next.j
 
 ---
 
+
+<div align="center flex flex-col">
+  <img src="public/Screenshot 2025-03-11 204319.png" alt="Homepage" width="100%">
+  <br>
+  <img src="public/Screenshot 2025-03-11 204327.png" alt="Shopping Cart" width="100%">
+  <br>
+  <img src="public/Screenshot 2025-03-11 204338.png" alt="Filters / Shop" width="100%">
+</div>
+
 ## ✨ Features
 
 - **E-commerce Essentials**:
@@ -89,12 +98,13 @@ MAISON is a beautifully designed, modern e-commerce platform built with **Next.j
 
 ## 📸 Screenshots
 
+
 <div align="center flex flex-col">
-  <img src="public/Screenshot 2025-03-11 204319.png" alt="Homepage" width="100%">
+  <img src="public/Screenshot 2025-03-11 204734.png" alt="Homepage" width="100%">
   <br>
-  <img src="public/Screenshot 2025-03-11 204327.png" alt="Shopping Cart" width="100%">
+  <img src="public/Screenshot 2025-03-11 204750.png" alt="Shopping Cart" width="100%">
   <br>
-  <img src="public/Screenshot 2025-03-11 204338.png" alt="Filters / Shop" width="100%">
+  <img src="public/Screenshot 2025-03-11 204753.png" alt="Filters / Shop" width="100%">
 </div>
 
 ---
