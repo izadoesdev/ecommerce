@@ -23,7 +23,6 @@ export const metadata: Metadata = {
   title: "MAISON - Beautiful Home Decor & Furnishings",
   description:
     "Discover beautiful home decor, furniture, and accessories for your modern lifestyle. Create a space that feels like home.",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
