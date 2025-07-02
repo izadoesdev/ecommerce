@@ -1,60 +1,78 @@
-import { Suspense } from "react"
+"use client"
+
+import { useParams, notFound } from "next/navigation"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ProductGrid } from "@/components/product-grid"
 import { ProductSkeleton } from "@/components/product-skeleton"
-import { getProducts, getCategories } from "@/lib/products"
-import { notFound } from "next/navigation"
-import { useTranslation } from "@/lib/i18n"
+import { trpc } from "@/lib/trpc/client"
+import { useTranslation } from "@/lib/i18n/client"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
-export async function generateStaticParams() {
-  const categories = await getCategories()
-  return categories.map((category) => ({
-    slug: category.id,
-  }))
-}
+export default function CategoryPage() {
+  const { t } = useTranslation()
+  const params = useParams()
+  const slug = params.slug as string
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
-  const categories = await getCategories()
-  const category = categories.find((cat) => cat.id === slug)
+  const { data: category, isLoading, isError } = trpc.categories.getBySlug.useQuery(
+    { slug },
+    { enabled: !!slug } // Only run query when slug is available
+  )
 
-  if (!category) {
-    return {
-      title: "Category Not Found",
-    }
+  // Handle loading state with a skeleton UI
+  if (isLoading) {
+    return (
+      <>
+        <Navbar />
+        <div className="container mx-auto px-4 py-8">
+          <div className="animate-pulse mb-12">
+            <div className="h-10 bg-gray-200 rounded-md w-1/3 mb-4 dark:bg-gray-700"></div>
+            <div className="h-4 bg-gray-200 rounded-md w-1/2 dark:bg-gray-700"></div>
+          </div>
+          <ProductSkeleton count={12} />
+        </div>
+        <Footer />
+      </>
+    )
   }
 
-  return {
-    title: `${category.name} - MAISON`,
-    description: `Explore our ${category.name.toLowerCase()} collection at MAISON.`,
-  }
-}
-
-export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { t } = await useTranslation()
-  const { slug } = await params
-  const categories = await getCategories()
-  const category = categories.find((cat) => cat.id === slug)
-
-  if (!category) {
-    notFound()
+  // Handle data fetching errors or if category is not found
+  if (isError || !category) {
+    return notFound()
   }
 
-  const products = await getProducts(slug === "all" ? undefined : slug)
+  const products = category?.products || []
 
   return (
     <>
       <Navbar />
-      <div className="container mx-auto px-4 py-16 mt-16">
-        <div className="mb-8">
-          <h1 className="text-3xl font-serif mb-2">{t(`category.${category.id}.name`)}</h1>
-          <p className="text-muted-foreground">{category.description || t(`category.${category.id}.description`)}</p>
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-serif font-bold tracking-tight sm:text-5xl">
+            {category.name}
+          </h1>
+          {category.description && (
+            <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
+              {category.description}
+            </p>
+          )}
         </div>
 
-        <Suspense fallback={<ProductSkeleton count={8} />}>
-          <ProductGrid products={products} category={slug} showSorting={true} />
-        </Suspense>
+        {/* Render product grid or empty state */}
+        {products.length > 0 ? (
+          <ProductGrid products={products} />
+        ) : (
+          <div className="text-center py-16">
+            <h2 className="text-2xl font-semibold mb-4">{t("category.noProductsTitle")}</h2>
+            <p className="text-muted-foreground mb-8">
+              {t("category.noProductsDesc")}
+            </p>
+            <Button asChild>
+              <Link href="/">{t("category.backToHome")}</Link>
+            </Button>
+          </div>
+        )}
       </div>
       <Footer />
     </>

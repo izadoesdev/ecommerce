@@ -14,27 +14,78 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ProductStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
 model Product {
-  id          Int      @id @default(autoincrement())
-  sku         String?  @unique
-  slug        String   @unique
+  id          Int           @id @default(autoincrement())
+  slug        String        @unique
   name        String
   description String
-  price       Float
-  salePrice   Float?
-  images      String[]
-  stock       Int?     @default(0)
   tags        String[]
+  status      ProductStatus @default(DRAFT)
   details     Json?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  featured    Boolean       @default(false)
+  newArrival  Boolean       @default(false)
+  sale        Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   categoryId Int
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
+  variants ProductVariant[]
+  options  ProductOption[]
+
+  collections CollectionOnProduct[]
+
   @@index([slug])
   @@index([name])
+  @@index([status])
+  @@index([featured])
+  @@index([newArrival])
+  @@index([sale])
+  @@index([tags], type: Gin)
+}
+
+model ProductOption {
+  id        Int      @id @default(autoincrement())
+  name      String // e.g., "Color", "Size"
+  values    String[] // e.g., ["Red", "Blue", "Green"]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  productId Int
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, name])
+}
+
+model ProductVariant {
+  id        Int      @id @default(autoincrement())
+  sku       String?  @unique
+  price     Float
+  salePrice Float?
+  stock     Int      @default(0)
+  images    String[]
+  options   Json // e.g., {"Color": "Red", "Size": "M"}
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  productId Int
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([sku])
   @@index([price])
+  @@index([options], type: Gin)
 }
 
 model Category {
@@ -63,7 +114,7 @@ model User {
   image         String?
   createdAt     DateTime
   updatedAt     DateTime
-  role          String?
+  role          Role?     @default(USER)
   banned        Boolean?
   banReason     String?
   banExpires    DateTime?
@@ -118,5 +169,31 @@ model Verification {
   createdAt  DateTime?
   updatedAt  DateTime?
 
+  @@index([identifier])
   @@map("verification")
+}
+
+model Collection {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  name        String
+  description String?
+  image       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  products CollectionOnProduct[]
+
+  @@index([slug])
+}
+
+model CollectionOnProduct {
+  collectionId Int
+  productId    Int
+  assignedAt   DateTime @default(now())
+
+  collection Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  product    Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([collectionId, productId])
 }

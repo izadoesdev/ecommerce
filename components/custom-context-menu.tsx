@@ -2,7 +2,7 @@
 
 import React, { ReactNode } from "react"
 import { Copy, Share, Heart, ShoppingCart, Eye, Trash } from "lucide-react"
-import { 
+import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
@@ -12,29 +12,33 @@ import {
 } from "@/components/ui/context-menu"
 import { useToast } from "@/components/ui/use-toast"
 import { useCart } from "@/components/cart-provider"
-import { Product } from "@/lib/types"
+import { ProductWithRelations } from "@/lib/products"
 import { useTranslation } from "@/lib/i18n/client"
 
 interface CustomContextMenuProps {
   children: ReactNode
-  product?: Product
+  product?: ProductWithRelations
   onQuickView?: () => void
   className?: string
 }
 
-export function CustomContextMenu({ 
-  children, 
-  product, 
+export function CustomContextMenu({
+  children,
+  product,
   onQuickView,
-  className 
+  className
 }: CustomContextMenuProps) {
   const { toast } = useToast()
   const { addToCart } = useCart()
   const { t } = useTranslation()
 
+  const variant = product?.variants[0]
+  const price = variant?.price ?? 0
+  const salePrice = variant?.salePrice
+
   const handleCopyLink = () => {
     if (product) {
-      const url = `${window.location.origin}/product/${product.id}`
+      const url = `${window.location.origin}/product/${product.slug}`
       navigator.clipboard.writeText(url)
       toast({
         title: t("common.copied"),
@@ -49,7 +53,7 @@ export function CustomContextMenu({
         await navigator.share({
           title: product.name,
           text: product.description,
-          url: `${window.location.origin}/product/${product.id}`,
+          url: `${window.location.origin}/product/${product.slug}`,
         })
       } catch (error) {
         console.error("Error sharing:", error)
@@ -89,13 +93,13 @@ export function CustomContextMenu({
             <div className="px-2 py-1.5">
               <p className="text-sm font-medium leading-none">{product.name}</p>
               <p className="text-xs text-muted-foreground mt-1">
-                {product.salePrice ? (
+                {salePrice && salePrice < price ? (
                   <>
-                    <span className="text-primary font-medium">${product.salePrice}</span>
-                    <span className="line-through ml-2">${product.price}</span>
+                    <span className="text-primary font-medium">${salePrice.toFixed(2)}</span>
+                    <span className="line-through ml-2">${price.toFixed(2)}</span>
                   </>
                 ) : (
-                  <span className="font-medium">${product.price}</span>
+                  <span className="font-medium">${price.toFixed(2)}</span>
                 )}
               </p>
             </div>

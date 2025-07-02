@@ -5,11 +5,11 @@ import { ShoppingCart, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useCart } from "@/components/cart-provider"
 import { useTranslation } from "@/lib/i18n/client"
-import type { Product } from "@/lib/types"
+import type { ProductWithRelations } from "@/lib/products"
 import { motion } from "framer-motion"
 
 interface AddToCartButtonProps {
-  product: Product
+  product: ProductWithRelations
   size?: "default" | "sm" | "lg"
 }
 

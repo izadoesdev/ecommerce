@@ -35,25 +35,29 @@ export default function CartPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               <div className="border-t border-gray-100">
-                {items.map((item) => (
-                  <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <CartItem
-                      id={item.id}
-                      name={item.name}
-                      price={item.price}
-                      salePrice={item.salePrice}
-                      quantity={item.quantity}
-                      image={item.image}
-                      stock={item.stock || 10}
-                    />
-                  </motion.div>
-                ))}
+                {items.map((item) => {
+                  const variant = item.variants[0]
+                  return (
+                    <motion.div
+                      key={item.id}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <CartItem
+                        id={item.id}
+                        slug={item.slug}
+                        name={item.name}
+                        price={variant?.price ?? 0}
+                        salePrice={variant?.salePrice ?? undefined}
+                        quantity={item.quantity}
+                        image={variant?.images[0] || "/placeholder.svg"}
+                        stock={variant?.stock || 10}
+                      />
+                    </motion.div>
+                  )
+                })}
               </div>
 
               <div className="mt-4 flex justify-end">

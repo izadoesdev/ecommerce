@@ -19,205 +19,95 @@
     "heroTitle": "Create a Space That Feels Like Home",
     "heroSubtitle": "Discover our curated collection of home decor and furniture for your modern lifestyle.",
     "shopNow": "Shop Now",
-    "newArrivals": "New Arrivals",
-    "newArrivalsSubtitle": "The latest additions to our collection",
-    "shopByCategory": "Shop by Category",
-    "categorySubtitle": "Browse our collections by room or style",
-    "viewAllCategories": "View All Categories",
-    "exploreCategory": "Explore",
     "featuredProducts": "Featured Products",
-    "featuredSubtitle": "Handpicked by our design team",
-    "newCollection": "New Collection",
-    "trending": "Trending Now",
-    "livingRoom": "Living Room Furniture",
-    "livingRoomDesc": "Create a cozy and stylish living space with our curated furniture collection.",
-    "kitchenware": "Kitchen Essentials",
-    "kitchenwareDesc": "Elevate your cooking experience with our premium kitchen accessories.",
-    "shopCollection": "Shop Collection",
-    "testimonials": "What Our Customers Say",
-    "testimonialsSubtitle": "Read reviews from our satisfied customers",
-    "testimonial1": "I absolutely love the quality of the furniture I purchased. The attention to detail is remarkable, and it has transformed my living room completely.",
-    "testimonial2": "The ceramic vases I ordered are even more beautiful in person. The shipping was fast, and everything arrived perfectly packaged.",
-    "testimonial3": "MAISON has the best customer service I've experienced. They helped me choose the perfect pieces for my new apartment, and I couldn't be happier.",
-    "onSale": "On Sale",
-    "onSaleSubtitle": "Limited time offers on selected items",
+    "featuredSubtitle": "Handpicked items you're sure to love",
+    "newArrivals": "New Arrivals",
+    "newArrivalsSubtitle": "Check out the latest additions to our collection",
+    "onSale": "Currently On Sale",
+    "onSaleSubtitle": "Get these great items at a reduced price",
+    "loadingProducts": "Loading Our Collection...",
+    "noProductsFound": "Our Shelves Are Currently Empty",
+    "noProductsDesc": "We're busy curating new and exciting products. Please check back soon!",
+    "exploreAll": "Explore All Products",
     "stayUpdated": "Stay Updated",
-    "stayUpdatedDesc": "Subscribe to our newsletter for exclusive offers, design tips, and new arrivals.",
-    "emailPlaceholder": "Your email address",
+    "stayUpdatedDesc": "Sign up for our newsletter to get the latest news, updates, and special offers.",
+    "emailPlaceholder": "Enter your email address",
     "subscribe": "Subscribe"
   },
   "product": {
-    "sale": "Sale",
-    "new": "New",
-    "viewAll": "View All",
     "addToCart": "Add to Cart",
-    "added": "Added to Cart",
+    "added": "Added!",
     "inCart": "In Cart",
-    "loadMore": "Load More",
-    "noProducts": "No products found.",
-    "item": "item",
-    "items": "items",
-    "sortBy": "Sort by",
-    "wishlist": "Add to Wishlist",
-    "quickView": "Quick View",
     "details": "Details",
     "material": "Material",
     "dimensions": "Dimensions",
     "care": "Care",
     "youMayAlsoLike": "You may also like",
-    "sort": {
-      "newest": "Newest",
-      "price-low-high": "Price: Low to High",
-      "price-high-low": "Price: High to Low",
-      "name-a-z": "Name: A to Z",
-      "name-z-a": "Name: Z to A"
-    },
-    "filter": "Filter",
-    "filters": "Filters",
-    "clearFilters": "Clear Filters",
-    "resetFilters": "Reset Filters",
-    "priceRange": "Price Range",
-    "categories": "Categories",
-    "availability": "Availability",
-    "inStock": "In Stock",
-    "onSale": "On Sale",
-    "newArrivals": "New Arrivals",
-    "addToWishlist": "Add to Wishlist",
-    "linkCopied": "Product link copied to clipboard",
-    "viewDetails": "View Details"
-  },
-  "category": {
-    "all": {
-      "name": "All Products",
-      "description": "Browse our complete collection of home goods"
-    },
-    "decor": {
-      "name": "Home Decor",
-      "description": "Beautiful accessories to enhance your home"
-    },
-    "furniture": {
-      "name": "Furniture",
-      "description": "Stylish and functional furniture for every room"
-    },
-    "textiles": {
-      "name": "Textiles",
-      "description": "Soft fabrics to add comfort and style"
-    },
-    "kitchen": {
-      "name": "Kitchen",
-      "description": "Essential tools for cooking and dining"
-    },
-    "new-arrivals": {
-      "name": "New Arrivals",
-      "description": "The latest additions to our collection"
-    },
-    "lighting": {
-      "name": "Lighting",
-      "description": "Illuminate your space with stylish lighting options"
-    },
-    "bathroom": {
-      "name": "Bathroom",
-      "description": "Elegant accessories for your bathroom"
-    },
-    "outdoor": {
-      "name": "Outdoor",
-      "description": "Furnish your outdoor spaces with style"
-    },
-    "office": {
-      "name": "Office",
-      "description": "Create a productive and stylish workspace"
-    },
-    "bedroom": {
-      "name": "Bedroom",
-      "description": "Transform your bedroom into a peaceful retreat"
-    },
-    "dining": {
-      "name": "Dining",
-      "description": "Elegant dining furniture and accessories"
-    },
-    "storage": {
-      "name": "Storage",
-      "description": "Stylish storage solutions for every room"
-    },
-    "rugs": {
-      "name": "Rugs & Carpets",
-      "description": "Add warmth and texture to your floors"
-    },
-    "wall-decor": {
-      "name": "Wall Decor",
-      "description": "Enhance your walls with art and decorative pieces"
-    },
-    "seasonal": {
-      "name": "Seasonal",
-      "description": "Special items for holidays and seasons"
-    }
+    "featured": "Featured",
+    "new": "New",
+    "sale": "Sale",
+    "variants": "Variants",
+    "inStock": "in stock",
+    "notFound": "Product Not Found",
+    "notFoundDesc": "Sorry, we couldn't find the product you're looking for.",
+    "description": "Description",
+    "specifications": "Specifications",
+    "reviews": "Reviews",
+    "category": "Category",
+    "sku": "SKU",
+    "stock": "Stock",
+    "tags": "Tags",
+    "customerReviews": "Customer Reviews",
+    "writeReview": "Write a Review",
+    "viewDetails": "View Details",
+    "loadingProduct": "Loading product...",
+    "noReviews": "There are no reviews for this product yet. Be the first to share your thoughts!"
   },
   "cart": {
-    "title": "Shopping Cart",
-    "empty": "Your cart is empty",
-    "emptyMessage": "Looks like you haven't added any products to your cart yet.",
-    "continueShopping": "Continue Shopping",
-    "orderSummary": "Order Summary",
+    "title": "Your Shopping Cart",
+    "empty": "Your cart is currently empty.",
+    "browse": "Browse Products",
     "subtotal": "Subtotal",
-    "shipping": "Shipping",
-    "freeShipping": "Free",
-    "tax": "Tax (10%)",
-    "total": "Total",
-    "checkout": "Checkout",
-    "processing": "Processing...",
-    "clearCart": "Clear Cart",
+    "checkout": "Proceed to Checkout",
+    "continueShopping": "Continue Shopping",
     "remove": "Remove",
     "itemAdded": "Item added to cart"
+  },
+  "categories": {
+    "shopByCategory": "Shop By Category",
+    "shopByCategoryDesc": "Explore our curated collections.",
+    "exploreCollection": "Explore Collection",
+    "noProductsTitle": "No Products in this Category Yet",
+    "noProductsDesc": "We are working on adding new products. Please check back later.",
+    "backToHome": "Back to Home"
   },
   "search": {
     "placeholder": "Search for products...",
     "results": "Search Results",
-    "resultsFor": "results for",
-    "noResults": "No results found for"
+    "noResults": "No results found"
   },
   "error": {
     "notFound": "Page Not Found",
     "notFoundMessage": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
-    "returnHome": "Return Home"
+    "returnHome": "Return Home",
+    "couldNotLoadProducts": "Could Not Load Products",
+    "tryRefreshing": "There was an issue fetching our products. Please try refreshing the page.",
+    "refreshPage": "Refresh Page",
+    "somethingWentWrong": "Something went wrong",
+    "tryAgainMessage": "We apologize for the inconvenience. Please try again or return home.",
+    "tryAgain": "Try again"
   },
   "footer": {
     "storeDescription": "MAISON offers a curated selection of modern home decor, furniture, and accessories for the design-conscious individual.",
     "shop": "Shop",
     "allProducts": "All Products",
-    "decor": "Home Decor",
-    "furniture": "Furniture",
-    "kitchen": "Kitchen",
-    "textiles": "Textiles",
     "company": "Company",
     "aboutUs": "About Us",
     "contactUs": "Contact Us",
-    "blog": "Blog",
-    "careers": "Careers",
     "newsletter": "Newsletter",
     "newsletterDesc": "Subscribe to receive updates on new arrivals and special offers.",
-    "emailPlaceholder": "Your email",
-    "subscribe": "Subscribe",
-    "address": "123 Design Street, New York, NY 10001, USA",
-    "phone": "+1 (555) 123-4567",
-    "email": "hello@maison.com",
-    "copyright": "© 2023 MAISON. All rights reserved.",
+    "copyright": "© 2024 MAISON. All rights reserved.",
     "privacyPolicy": "Privacy Policy",
-    "termsOfService": "Terms of Service",
-    "shippingPolicy": "Shipping Policy"
-  },
-  "common": {
-    "copyLink": "Copy Link",
-    "share": "Share",
-    "copied": "Copied!",
-    "next": "Next",
-    "previous": "Previous"
-  },
-  "wishlist": {
-    "itemAdded": "Added to Wishlist",
-    "itemRemoved": "Removed from Wishlist",
-    "title": "My Wishlist",
-    "empty": "Your wishlist is empty",
-    "emptyMessage": "You haven't added any products to your wishlist yet."
+    "termsOfService": "Terms of Service"
   }
 }
-

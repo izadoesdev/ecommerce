@@ -11,13 +11,13 @@ import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/components/cart-provider"
 import { FadeIn } from "@/components/animations/fade-in"
 import { useTranslation } from "@/lib/i18n/client"
-import type { Product } from "@/lib/types"
+import type { ProductWithRelations } from "@/lib/products"
 import { motion } from "framer-motion"
 import { CustomContextMenu } from "@/components/custom-context-menu"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
 interface ProductCardProps {
-  product: Product
+  product: ProductWithRelations
   index?: number
 }
 
@@ -29,6 +29,13 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
   const [isImageLoaded, setIsImageLoaded] = useState(false)
   const [showQuickView, setShowQuickView] = useState(false)
   const productInCart = isInCart(product.id)
+
+  // Use the first variant as the main variant
+  const variant = product.variants[0]
+  const price = variant?.salePrice ?? variant?.price ?? 0
+  const originalPrice = variant?.price ?? 0
+  const image = variant?.images?.[0] || "/placeholder.svg"
+  const stock = variant?.stock ?? 0
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -42,8 +49,8 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
   return (
     <FadeIn delay={index * 0.1} className="group h-full">
-      <CustomContextMenu 
-        product={product} 
+      <CustomContextMenu
+        product={product}
         onQuickView={handleQuickView}
         className="h-full"
       >
@@ -52,7 +59,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <Link href={`/product/${product.id}`} className="flex flex-col h-full">
+          <Link href={`/product/${product.slug}`} className="flex flex-col h-full">
             {/* Image container */}
             <div className="relative overflow-hidden bg-accent aspect-[3/4] rounded-t-lg">
               {/* Product badges */}
@@ -71,7 +78,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
               <div className="w-full h-full">
                 {!isImageLoaded && <div className="absolute inset-0 bg-accent animate-pulse-soft" />}
                 <img
-                  src={product.image || "/placeholder.svg"}
+                  src={image}
                   alt={product.name}
                   className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                   onLoad={() => setIsImageLoaded(true)}
@@ -88,9 +95,8 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
                 <Button
                   size="sm"
                   onClick={handleAddToCart}
-                  className={`rounded-full w-10 h-10 p-0 ${
-                    productInCart ? "bg-primary text-white" : "bg-white text-foreground hover:bg-primary hover:text-white"
-                  } transition-colors shadow-md`}
+                  className={`rounded-full w-10 h-10 p-0 ${productInCart ? "bg-primary text-white" : "bg-white text-foreground hover:bg-primary hover:text-white"
+                    } transition-colors shadow-md`}
                   title={t("product.addToCart")}
                 >
                   <ShoppingCart className="h-4 w-4" />
@@ -121,16 +127,16 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
             {/* Product details */}
             <div className="flex-1 flex flex-col p-4">
-              <div className="text-sm text-muted-foreground mb-1">{t(`category.${product.category}.name`)}</div>
+              <div className="text-sm text-muted-foreground mb-1">{product.category?.name}</div>
               <h3 className="font-medium line-clamp-1">{product.name}</h3>
               <div className="mt-auto pt-2 flex items-baseline gap-2">
-                {product.sale && product.salePrice ? (
+                {variant?.salePrice && variant.salePrice < originalPrice ? (
                   <>
-                    <span className="font-medium text-primary">${product.salePrice.toFixed(2)}</span>
-                    <span className="text-sm text-muted-foreground line-through">${product.price.toFixed(2)}</span>
+                    <span className="font-medium text-primary">${variant.salePrice.toFixed(2)}</span>
+                    <span className="text-sm text-muted-foreground line-through">${originalPrice.toFixed(2)}</span>
                   </>
                 ) : (
-                  <span className="font-medium">${product.price.toFixed(2)}</span>
+                  <span className="font-medium">${originalPrice.toFixed(2)}</span>
                 )}
               </div>
             </div>
@@ -147,30 +153,30 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
               {product.category}
             </DialogDescription>
           </DialogHeader>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
             <div className="aspect-square overflow-hidden rounded-md">
-              <img 
-                src={product.image || "/placeholder.svg"} 
-                alt={product.name} 
+              <img
+                src={product.image || "/placeholder.svg"}
+                alt={product.name}
                 className="w-full h-full object-cover"
               />
             </div>
-            
+
             <div className="flex flex-col">
               <div className="flex items-baseline gap-2 mb-4">
-                {product.sale && product.salePrice ? (
+                {variant?.salePrice && variant.salePrice < originalPrice ? (
                   <>
-                    <span className="text-2xl font-medium text-primary">${product.salePrice.toFixed(2)}</span>
-                    <span className="text-lg text-muted-foreground line-through">${product.price.toFixed(2)}</span>
+                    <span className="text-2xl font-medium text-primary">${variant.salePrice.toFixed(2)}</span>
+                    <span className="text-lg text-muted-foreground line-through">${originalPrice.toFixed(2)}</span>
                   </>
                 ) : (
-                  <span className="text-2xl font-medium">${product.price.toFixed(2)}</span>
+                  <span className="text-2xl font-medium">${originalPrice.toFixed(2)}</span>
                 )}
               </div>
-              
+
               <p className="text-sm text-muted-foreground mb-6">{product.description}</p>
-              
+
               {product.details && (
                 <div className="space-y-2 mb-6">
                   {product.details.material && (
@@ -184,10 +190,10 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
                   )}
                 </div>
               )}
-              
+
               <div className="mt-auto space-y-4">
-                <Button 
-                  className="w-full" 
+                <Button
+                  className="w-full"
                   onClick={() => {
                     addToCart(product, 1)
                     setShowQuickView(false)
@@ -196,9 +202,9 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
                   <ShoppingCart className="mr-2 h-4 w-4" />
                   {t("product.addToCart")}
                 </Button>
-                
-                <Button 
-                  variant="outline" 
+
+                <Button
+                  variant="outline"
                   className="w-full"
                   onClick={() => router.push(`/product/${product.id}`)}
                 >

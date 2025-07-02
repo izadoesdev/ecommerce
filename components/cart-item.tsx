@@ -8,7 +8,8 @@ import { useCart } from "@/components/cart-provider"
 import { useTranslation } from "@/lib/i18n/client"
 
 interface CartItemProps {
-  id: string
+  id: number
+  slug: string
   name: string
   price: number
   salePrice?: number
@@ -17,7 +18,7 @@ interface CartItemProps {
   stock: number
 }
 
-export function CartItem({ id, name, price, salePrice, quantity, image, stock }: CartItemProps) {
+export function CartItem({ id, slug, name, price, salePrice, quantity, image, stock }: CartItemProps) {
   const { t } = useTranslation()
   const { updateQuantity, removeFromCart } = useCart()
   const [isImageLoaded, setIsImageLoaded] = useState(false)
@@ -41,7 +42,7 @@ export function CartItem({ id, name, price, salePrice, quantity, image, stock }:
     <div className="flex gap-4 py-4 border-b border-gray-100 dark:border-gray-800 animate-fade-in">
       <div className="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded overflow-hidden flex-shrink-0">
         {!isImageLoaded && <div className="w-full h-full bg-gray-100 dark:bg-gray-800 animate-pulse-soft" />}
-        <Link href={`/product/${id}`}>
+        <Link href={`/product/${slug}`}>
           <img
             src={image || "/placeholder.svg"}
             alt={name}
@@ -55,7 +56,7 @@ export function CartItem({ id, name, price, salePrice, quantity, image, stock }:
       <div className="flex-1 min-w-0">
         <div className="flex justify-between">
           <div className="pr-2">
-            <Link href={`/product/${id}`} className="hover:underline underline-offset-2">
+            <Link href={`/product/${slug}`} className="hover:underline underline-offset-2">
               <h3 className="font-medium text-sm line-clamp-1">{name}</h3>
             </Link>
             <div className="mt-1 flex items-center gap-2">

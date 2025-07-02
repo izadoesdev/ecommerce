@@ -17,7 +17,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState("")
     const router = useRouter()
 
-    const handleLogin = async (e: React.FormEvent) => {
+    const handleLoginEmail = async (e: React.FormEvent) => {
         e.preventDefault()
         await authClient.signIn.email({
             email,
@@ -32,10 +32,25 @@ export default function LoginPage() {
         });
     }
 
+    const handleLoginGoogle = async (e: React.FormEvent) => {
+        e.preventDefault()
+        await authClient.signIn.social({
+            provider: "google",
+            callbackURL: "/",
+        }, {
+            onSuccess: () => {
+                router.push("/")
+            },
+            onError: (ctx) => {
+                toast.error(ctx.error.message)
+            }
+        });
+    }
+
     return (
         <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2">
             <div className="flex items-center justify-center py-12">
-                <form onSubmit={handleLogin} className="mx-auto grid w-[400px] gap-6 p-6 rounded-lg border bg-background shadow-md">
+                <form onSubmit={handleLoginEmail} className="mx-auto grid w-[400px] gap-6 p-6 rounded-lg border bg-background shadow-md">
                     <div className="grid gap-2 text-center">
                         <h1 className="text-3xl font-bold">Login</h1>
                         <p className="text-balance text-muted-foreground">
@@ -80,7 +95,7 @@ export default function LoginPage() {
                             <Separator />
                             <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-2 text-xs uppercase text-muted-foreground">Or continue with</span>
                         </div>
-                        <Button variant="outline" className="w-full flex items-center gap-2">
+                        <Button variant="outline" className="flex w-full items-center gap-2" onClick={handleLoginGoogle}>
                             <Chrome className="h-5 w-5" /> Login with Google
                         </Button>
                     </div>

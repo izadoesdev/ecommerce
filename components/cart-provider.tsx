@@ -2,9 +2,9 @@
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import { useToast } from "@/components/ui/use-toast"
-import type { Product } from "@/lib/types"
+import type { ProductWithRelations } from "@/lib/products"
 
-export interface CartItem extends Product {
+export interface CartItem extends ProductWithRelations {
   quantity: number
 }
 
@@ -12,11 +12,11 @@ interface CartContextType {
   items: CartItem[]
   itemCount: number
   totalPrice: number
-  addToCart: (product: Product, quantity: number) => void
-  removeFromCart: (id: string) => void
-  updateQuantity: (id: string, quantity: number) => void
+  addToCart: (product: ProductWithRelations, quantity: number) => void
+  removeFromCart: (id: number) => void
+  updateQuantity: (id: number, quantity: number) => void
   clearCart: () => void
-  isInCart: (id: string) => boolean
+  isInCart: (id: number) => boolean
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -28,7 +28,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // Calculate derived values
   const itemCount = items.reduce((total, item) => total + item.quantity, 0)
   const totalPrice = items.reduce((total, item) => {
-    const price = item.salePrice || item.price
+    const variant = item.variants[0]
+    const price = variant?.salePrice ?? variant?.price ?? 0
     return total + price * item.quantity
   }, 0)
 
@@ -50,7 +51,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [items])
 
   // Add product to cart
-  const addToCart = (product: Product, quantity: number) => {
+  const addToCart = (product: ProductWithRelations, quantity: number) => {
     setItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === product.id)
 
@@ -72,12 +73,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }
 
   // Remove product from cart
-  const removeFromCart = (id: string) => {
+  const removeFromCart = (id: number) => {
     setItems((prevItems) => prevItems.filter((item) => item.id !== id))
   }
 
   // Update quantity of a product
-  const updateQuantity = (id: string, quantity: number) => {
+  const updateQuantity = (id: number, quantity: number) => {
     setItems((prevItems) => prevItems.map((item) => (item.id === id ? { ...item, quantity } : item)))
   }
 
@@ -87,7 +88,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }
 
   // Check if a product is in the cart
-  const isInCart = (id: string) => {
+  const isInCart = (id: number) => {
     return items.some((item) => item.id === id)
   }
 

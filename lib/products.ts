@@ -1,4 +1,5 @@
 import type { Product, Category } from "./types"
+import type { Prisma } from "@/lib/generated/prisma"
 
 // Mock data for products
 const products: Product[] = [
@@ -239,22 +240,56 @@ const categories: Category[] = [
   },
 ]
 
-// Function to get all products or filter by category
-export function getProducts(category?: string): Product[] {
-  if (!category || category === "all") {
-    return [...products]
-  }
-
-  return products.filter((product) => product.category === category)
-}
-
 // Function to get a product by ID
 export function getProductById(id: string): Product | undefined {
   return products.find((product) => product.id === id)
 }
 
 // Function to get all categories
-export function getCategories(): Category[] {
-  return [...categories]
+export async function getCategories() {
+  try {
+    const res = await fetch("/api/categories")
+    if (!res.ok) throw new Error("Failed to fetch categories")
+    return await res.json()
+  } catch (error) {
+    console.error("Error fetching categories:", error)
+    return []
+  }
+}
+
+export async function getProducts() {
+  try {
+    const res = await fetch("/api/products")
+    if (!res.ok) throw new Error("Failed to fetch products")
+    return await res.json()
+  } catch (error) {
+    console.error("Error fetching products:", error)
+    return []
+  }
+}
+
+export type ProductWithRelations = Prisma.ProductGetPayload<{ include: { category: true; variants: true } }>
+export type CategoryWithProducts = Prisma.CategoryGetPayload<{ include: { products: { include: { variants: true } } } }>
+
+export async function getProductBySlug(slug: string): Promise<ProductWithRelations | null> {
+  try {
+    const res = await fetch(`/api/products/${slug}`)
+    if (!res.ok) throw new Error("Failed to fetch product")
+    return await res.json()
+  } catch (error) {
+    console.error("Error fetching product:", error)
+    return null
+  }
+}
+
+export async function getCategoryBySlug(slug: string): Promise<CategoryWithProducts | null> {
+  try {
+    const res = await fetch(`/api/categories/${slug}`)
+    if (!res.ok) throw new Error("Failed to fetch category")
+    return await res.json()
+  } catch (error) {
+    console.error("Error fetching category:", error)
+    return null
+  }
 }
 

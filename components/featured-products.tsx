@@ -7,10 +7,10 @@ import { Button } from "@/components/ui/button"
 import { ProductCard } from "@/components/product-card"
 import { FadeIn } from "@/components/animations/fade-in"
 import { useTranslation } from "@/lib/i18n/client"
-import type { Product } from "@/lib/types"
+import type { ProductWithRelations } from "@/lib/products"
 
 interface FeaturedProductsProps {
-  products: Product[]
+  products: ProductWithRelations[]
   title: string
   subtitle?: string
   viewAllLink?: string

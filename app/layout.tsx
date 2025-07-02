@@ -7,6 +7,7 @@ import { CartProvider } from "@/components/cart-provider"
 import { Toaster } from "@/components/ui/toaster"
 import { Toaster as SonnerToaster } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { TRPCProvider } from "@/components/providers/trpc-provider"
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -20,30 +21,29 @@ const lato = Lato({
 })
 
 export const metadata: Metadata = {
-  title: "MAISON - Beautiful Home Decor & Furnishings",
-  description:
-    "Discover beautiful home decor, furniture, and accessories for your modern lifestyle. Create a space that feels like home.",
+  title: "MAISON - Modern Home Decor",
+  description: "Discover beautiful, modern home decor and furniture for every room in your house.",
 }
 
 export default function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode
-  params: { lang: string }
 }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${playfair.variable} ${lato.variable}`}>
       <body className="font-sans">
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          <CartProvider>
-            <TooltipProvider>
-              <main className="min-h-screen">{children}</main>
-              <Toaster />
-              <SonnerToaster />
-            </TooltipProvider>
-          </CartProvider>
-        </ThemeProvider>
+        <TRPCProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            <CartProvider>
+              <TooltipProvider>
+                <main className="min-h-screen">{children}</main>
+                <Toaster />
+                <SonnerToaster />
+              </TooltipProvider>
+            </CartProvider>
+          </ThemeProvider>
+        </TRPCProvider>
       </body>
     </html>
   )
