@@ -21,8 +21,15 @@ enum ProductStatus {
 }
 
 enum Role {
-  USER
-  ADMIN
+  user
+  curator
+  moderator
+  editor
+  supplier
+  admin
+  employee
+  superadmin
+  banned
 }
 
 model Product {
@@ -49,6 +56,9 @@ model Product {
 
   @@index([slug])
   @@index([name])
+  @@index([status, featured, createdAt(sort: Desc)])
+  @@index([status, newArrival, createdAt(sort: Desc)])
+  @@index([status, sale, createdAt(sort: Desc)])
   @@index([status])
   @@index([featured])
   @@index([newArrival])
@@ -114,7 +124,7 @@ model User {
   image         String?
   createdAt     DateTime
   updatedAt     DateTime
-  role          Role?     @default(USER)
+  role          Role?     @default(user)
   banned        Boolean?
   banReason     String?
   banExpires    DateTime?

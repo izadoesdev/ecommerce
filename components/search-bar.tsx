@@ -33,7 +33,7 @@ export function SearchBar({ onClose }: SearchBarProps) {
     const products = await getProducts()
     const results = products
       .filter(
-        (product) =>
+        (product: any) =>
           product.name.toLowerCase().includes(term.toLowerCase()) ||
           product.description.toLowerCase().includes(term.toLowerCase()),
       )

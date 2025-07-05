@@ -55,6 +55,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         className="h-full"
       >
         <div
+          key={product.id}
           className="relative h-full flex flex-col product-card"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -150,14 +151,14 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           <DialogHeader>
             <DialogTitle>{product.name}</DialogTitle>
             <DialogDescription>
-              {product.category}
+              {product.category?.name}
             </DialogDescription>
           </DialogHeader>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
             <div className="aspect-square overflow-hidden rounded-md">
               <img
-                src={product.image || "/placeholder.svg"}
+                src={image}
                 alt={product.name}
                 className="w-full h-full object-cover"
               />
@@ -177,16 +178,16 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
               <p className="text-sm text-muted-foreground mb-6">{product.description}</p>
 
-              {product.details && (
+              {(product.details as any)?.material && (
                 <div className="space-y-2 mb-6">
-                  {product.details.material && (
-                    <p className="text-sm"><span className="font-medium">{t("product.material")}:</span> {product.details.material}</p>
+                  {(product.details as any).material && (
+                    <p className="text-sm"><span className="font-medium">{t("product.material")}:</span> {(product.details as any).material}</p>
                   )}
-                  {product.details.dimensions && (
-                    <p className="text-sm"><span className="font-medium">{t("product.dimensions")}:</span> {product.details.dimensions}</p>
+                  {(product.details as any).dimensions && (
+                    <p className="text-sm"><span className="font-medium">{t("product.dimensions")}:</span> {(product.details as any).dimensions}</p>
                   )}
-                  {product.details.care && (
-                    <p className="text-sm"><span className="font-medium">{t("product.care")}:</span> {product.details.care}</p>
+                  {(product.details as any).care && (
+                    <p className="text-sm"><span className="font-medium">{t("product.care")}:</span> {(product.details as any).care}</p>
                   )}
                 </div>
               )}

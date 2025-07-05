@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { router, publicProcedure, adminProcedure } from '../trpc'
 import { TRPCError } from '@trpc/server'
+import { Prisma } from '@/lib/generated/prisma/client'
 
 export const productsRouter = router({
     // Get all published products
@@ -85,6 +86,33 @@ export const productsRouter = router({
             return product
         }),
 
+    // Full-text search for products with dynamic sorting
+    search: publicProcedure
+        .input(z.object({
+            query: z.string(),
+            sortBy: z.enum(['relevance', 'newest', 'price-asc', 'price-desc']).default('relevance'),
+        }))
+        .query(async ({ ctx, input }) => {
+            const { query } = input;
+
+            return await ctx.db.product.findMany({
+                where: {
+                    status: 'PUBLISHED',
+                    OR: [
+                        { name: { contains: query, mode: 'insensitive' } },
+                        { description: { contains: query, mode: 'insensitive' } },
+                        { tags: { has: query.toLowerCase() } },
+                    ],
+                },
+                include: {
+                    category: true,
+                    variants: true,
+                },
+                orderBy: { createdAt: 'desc' },
+            });
+        }),
+
+    // Get related products (from the same category)
     getRelated: publicProcedure
         .input(z.object({
             categoryId: z.number(),

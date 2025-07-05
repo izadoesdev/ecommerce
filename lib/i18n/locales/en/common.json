@@ -81,10 +81,31 @@
     "noProductsDesc": "We are working on adding new products. Please check back later.",
     "backToHome": "Back to Home"
   },
+  "categoryPage": {
+    "title": "Products in {{categoryName}}",
+    "error": "Something went wrong. Please try again later.",
+    "empty": "No products found in this category yet. Check back soon!"
+  },
+  "productPage": {
+    "loading": "Loading product...",
+    "error": "Could not load product details."
+  },
   "search": {
-    "placeholder": "Search for products...",
+    "title": "Find Your Perfect Product",
+    "placeholder": "Search for products, brands, and more...",
+    "button": "Search",
     "results": "Search Results",
-    "noResults": "No results found"
+    "resultsFor": "results for",
+    "resultsCount": "{{count}} results found for \"{{query}}\"",
+    "noResults": "No results found for \"{{query}}\". Try a different search term.",
+    "error": "There was an error fetching search results. Please try again.",
+    "sortBy": "Sort by",
+    "sort": {
+      "relevance": "Relevance",
+      "newest": "Newest",
+      "price-asc": "Price: Low to High",
+      "price-desc": "Price: High to Low"
+    }
   },
   "error": {
     "notFound": "Page Not Found",
@@ -93,7 +114,7 @@
     "couldNotLoadProducts": "Could Not Load Products",
     "tryRefreshing": "There was an issue fetching our products. Please try refreshing the page.",
     "refreshPage": "Refresh Page",
-    "somethingWentWrong": "Something went wrong",
+    "somethingWentWrong": "Something went wrong. Please try again later.",
     "tryAgainMessage": "We apologize for the inconvenience. Please try again or return home.",
     "tryAgain": "Try again"
   },
@@ -102,12 +123,17 @@
     "shop": "Shop",
     "allProducts": "All Products",
     "company": "Company",
-    "aboutUs": "About Us",
-    "contactUs": "Contact Us",
+    "about": "About Us",
+    "contact": "Contact",
+    "careers": "Careers",
+    "support": "Support",
+    "shipping": "Shipping & Returns",
+    "faq": "FAQ",
+    "legal": "Legal",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
     "newsletter": "Newsletter",
     "newsletterDesc": "Subscribe to receive updates on new arrivals and special offers.",
-    "copyright": "© 2024 MAISON. All rights reserved.",
-    "privacyPolicy": "Privacy Policy",
-    "termsOfService": "Terms of Service"
+    "copyright": "© 2024 MAISON. All rights reserved."
   }
 }

@@ -4,11 +4,11 @@ import Negotiator from "negotiator"
 import { languages, fallbackLng } from "@/lib/i18n/settings"
 
 function getLocale(request: NextRequest): string {
-  // Negotiator expects plain object so we need to transform headers
   const negotiatorHeaders: Record<string, string> = {}
-  request.headers.forEach((value, key) => (negotiatorHeaders[key] = value))
+  request.headers.forEach((value, key) => {
+    negotiatorHeaders[key] = value
+  })
 
-  // Use negotiator and intl-localematcher to get best locale
   const locales = languages
   const detectedLanguages = new Negotiator({ headers: negotiatorHeaders }).languages()
 
@@ -23,8 +23,6 @@ function getLocale(request: NextRequest): string {
 
 export function middleware(request: NextRequest) {
   // Check if there is any supported locale in the pathname
-  const pathname = request.nextUrl.pathname
-
   // Get locale from cookie or headers
   const locale = getLocale(request)
 
