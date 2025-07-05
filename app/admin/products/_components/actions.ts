@@ -92,10 +92,13 @@ export async function addProduct(prevState: any, formData: FormData) {
         validatedFields.data
 
     try {
+        // Generate the slug from the name
+        const newSlug = name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, '')
+
         await db.product.create({
             data: {
                 name,
-                slug: name.toLowerCase().replace(/\s+/g, "-"),
+                slug: newSlug,
                 description: description ?? "",
                 categoryId,
                 status,
@@ -151,11 +154,14 @@ export async function updateProduct(id: number, prevState: any, formData: FormDa
         validatedFields.data
 
     try {
+        // Generate the slug from the name
+        const newSlug = name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, '')
+
         await db.product.update({
             where: { id },
             data: {
                 name,
-                slug: name.toLowerCase().replace(/\s+/g, "-"),
+                slug: newSlug,
                 description: description ?? "",
                 categoryId,
                 status,
@@ -177,8 +183,8 @@ export async function updateProduct(id: number, prevState: any, formData: FormDa
             },
         })
 
-        revalidatePath(`/admin/products`)
-        revalidatePath(`/admin/products/${name.toLowerCase().replace(/\s+/g, "-")}`)
+        revalidatePath("/admin/products")
+        revalidatePath(`/admin/products/${newSlug}`)
         return { success: true, message: "Product updated successfully." }
     } catch (error) {
         console.error("Failed to update product:", error)
@@ -202,10 +208,13 @@ export async function addCategory(prevState: any, formData: FormData) {
     const { name, description, image } = validatedFields.data
 
     try {
+        // Generate the slug from the name
+        const newSlug = name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, '')
+
         await db.category.create({
             data: {
                 name,
-                slug: name.toLowerCase().replace(/\s+/g, "-"),
+                slug: newSlug,
                 description,
                 image,
             },

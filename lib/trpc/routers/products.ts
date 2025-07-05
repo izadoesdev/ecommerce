@@ -185,7 +185,7 @@ export const productsRouter = router({
                 return await ctx.db.product.create({
                     data: {
                         ...productData,
-                        slug: input.name.toLowerCase().replace(/\s+/g, '-'),
+                        slug: input.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
                         featured: input.featured ?? false,
                         newArrival: input.newArrival ?? false,
                         sale: input.sale ?? false,
@@ -229,7 +229,7 @@ export const productsRouter = router({
                     where: { id },
                     data: {
                         ...productData,
-                        slug: input.name.toLowerCase().replace(/\s+/g, '-'),
+                        slug: input.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
                         featured: input.featured ?? false,
                         newArrival: input.newArrival ?? false,
                         sale: input.sale ?? false,

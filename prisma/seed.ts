@@ -259,9 +259,9 @@ async function main() {
 
             const variants = Array.from({ length: variantCount }, () => generateVariant(name, category.name))
 
-            // Ensure unique slug
             const baseSlug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
-            const slug = `${baseSlug}-${i}`
+            const uniqueId = String(i).padStart(4, '0')
+            const slug = `${baseSlug}-${uniqueId}`
 
             productsData.push({
                 slug,

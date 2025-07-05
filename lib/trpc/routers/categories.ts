@@ -50,7 +50,7 @@ export const categoriesRouter = router({
                 return await ctx.db.category.create({
                     data: {
                         ...input,
-                        slug: input.name.toLowerCase().replace(/\s+/g, '-'),
+                        slug: input.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
                     },
                 })
             }),
@@ -69,7 +69,7 @@ export const categoriesRouter = router({
                     where: { id },
                     data: {
                         ...data,
-                        slug: input.name.toLowerCase().replace(/\s+/g, '-'),
+                        slug: input.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
                     },
                 })
             }),
