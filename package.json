@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "postinstall": "prisma generate",
     "typecheck": "tsc --noEmit",
     "seed": "bun prisma/seed.ts",
     "start": "next start",
