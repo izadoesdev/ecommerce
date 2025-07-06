@@ -40,7 +40,7 @@ function SearchResults() {
     return <p className="text-center text-destructive">{t("search.error")}</p>
   }
 
-  if (query && !products?.length) {
+  if (query && !products?.products?.length) {
     return <p className="text-center text-muted-foreground">{t("search.noResults", { query })}</p>
   }
 
@@ -48,7 +48,7 @@ function SearchResults() {
     <div>
       <div className="flex justify-between items-center mb-6">
         <p className="text-sm text-muted-foreground">
-          {t("search.resultsCount", { count: products?.length || 0, query })}
+          {t("search.resultsCount", { count: products?.products?.length || 0, query })}
         </p>
         <Select value={sortBy} onValueChange={handleSortChange}>
           <SelectTrigger className="w-[180px]">
@@ -62,7 +62,7 @@ function SearchResults() {
           </SelectContent>
         </Select>
       </div>
-      <ProductGrid products={products || []} />
+      <ProductGrid products={products?.products || []} />
     </div>
   )
 }
