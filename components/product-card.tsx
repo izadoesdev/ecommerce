@@ -54,91 +54,77 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
       >
         <div
           key={product.id}
-          className="relative h-full flex flex-col product-card"
+          className="relative h-full flex flex-col bg-white dark:bg-card rounded-lg shadow-sm border border-border overflow-hidden product-card"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
           <Link href={`/product/${product.slug}`} className="flex flex-col h-full">
             {/* Image container */}
-            <div className="relative overflow-hidden bg-accent aspect-[3/4] rounded-t-lg">
-              {/* Product badges */}
-              <div className="absolute top-3 left-3 z-10 flex flex-col gap-1">
-                {product.sale && (
-                  <Badge className="bg-primary text-white font-medium px-3 py-1">{t("product.sale")}</Badge>
-                )}
-                {product.newArrival && (
-                  <Badge variant="outline" className="bg-white dark:bg-black px-3 py-1">
-                    {t("product.new")}
-                  </Badge>
-                )}
-              </div>
+            <div className="relative overflow-hidden bg-accent aspect-square">
+              {/* Sale badge - top left */}
+              {product.sale && (
+                <Badge className="absolute top-2 left-2 z-10 bg-green-500 text-white font-medium px-2 py-1 text-xs rounded">
+                  -15%
+                </Badge>
+              )}
+
+              {/* Heart icon - top right */}
+              <Button
+                size="sm"
+                variant="ghost"
+                className="absolute top-2 right-2 z-10 rounded-full w-8 h-8 p-0 bg-white/80 hover:bg-white text-foreground hover:text-red-500 transition-colors shadow-sm"
+                title={t("product.wishlist")}
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                }}
+              >
+                <Heart className="h-4 w-4" />
+              </Button>
 
               {/* Product image with loading state */}
               <div className="w-full h-full">
-                {!isImageLoaded && <div className="absolute inset-0 bg-accent animate-pulse-soft" />}
+                {!isImageLoaded && <div className="absolute inset-0 bg-accent animate-pulse" />}
                 <img
                   src={image}
                   alt={product.name}
-                  className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                   onLoad={() => setIsImageLoaded(true)}
                   style={{ opacity: isImageLoaded ? 1 : 0 }}
                 />
               </div>
-
-              {/* Quick actions overlay */}
-              <div
-                className={`absolute inset-0 bg-black/5 flex items-center justify-center gap-3 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'
-                  }`}
-              >
-                <Button
-                  size="sm"
-                  onClick={handleAddToCart}
-                  className={`rounded-full w-10 h-10 p-0 ${productInCart ? "bg-primary text-white" : "bg-white text-foreground hover:bg-primary hover:text-white"
-                    } transition-colors shadow-md`}
-                  title={t("product.addToCart")}
-                >
-                  <ShoppingCart className="h-4 w-4" />
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="rounded-full w-10 h-10 p-0 bg-white text-foreground hover:bg-primary hover:text-white border-none transition-colors shadow-md"
-                  title={t("product.wishlist")}
-                >
-                  <Heart className="h-4 w-4" />
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="rounded-full w-10 h-10 p-0 bg-white text-foreground hover:bg-primary hover:text-white border-none transition-colors shadow-md"
-                  title={t("product.quickView")}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    handleQuickView()
-                  }}
-                >
-                  <Eye className="h-4 w-4" />
-                </Button>
-              </div>
             </div>
 
             {/* Product details */}
-            <div className="flex-1 flex flex-col p-4">
-              <div className="text-sm text-muted-foreground mb-1">{product.category?.name}</div>
-              <h3 className="font-medium line-clamp-1">{product.name}</h3>
-              <div className="mt-auto pt-2 flex items-baseline gap-2">
+            <div className="flex-1 flex flex-col p-3">
+              <div className="text-xs text-muted-foreground mb-1">{product.category?.name}</div>
+              <h3 className="font-medium text-sm line-clamp-2 mb-2 leading-tight">{product.name}</h3>
+
+              {/* Price */}
+              <div className="flex items-center gap-2 mb-3">
                 {variant?.salePrice && variant.salePrice < originalPrice ? (
                   <>
-                    <span className="font-medium text-primary">${variant.salePrice.toFixed(2)}</span>
-                    <span className="text-sm text-muted-foreground line-through">${originalPrice.toFixed(2)}</span>
+                    <span className="font-bold text-green-600">${variant.salePrice.toFixed(0)}</span>
+                    <span className="text-xs text-muted-foreground line-through">${originalPrice.toFixed(0)}</span>
                   </>
                 ) : (
-                  <span className="font-medium">${originalPrice.toFixed(2)}</span>
+                  <span className="font-bold text-foreground">${originalPrice.toFixed(0)}</span>
                 )}
               </div>
             </div>
           </Link>
+
+          {/* Add to cart button - bottom of card */}
+          <div className="p-3 pt-0">
+            <Button
+              onClick={handleAddToCart}
+              className="w-full bg-amber-600 hover:bg-amber-700 text-white rounded-lg h-8 text-sm"
+              size="sm"
+            >
+              <ShoppingCart className="mr-2 h-3 w-3" />
+              {t("product.addToCart")}
+            </Button>
+          </div>
         </div>
       </CustomContextMenu>
 

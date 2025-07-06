@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useMemo, useCallback, useEffect, useRef } from "react"
-import { Search, Grid, List, SlidersHorizontal, Loader2 } from "lucide-react"
+import { Grid, List, Loader2 } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ProductGrid } from "@/components/product-grid"
@@ -9,10 +9,8 @@ import { ProductSkeleton } from "@/components/product-skeleton"
 import { trpc } from "@/lib/trpc/client"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { useTranslation } from "@/lib/i18n/client"
 import { Badge } from "@/components/ui/badge"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
@@ -20,7 +18,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { useDebounce } from "@/hooks/use-debounce"
 
-const PRODUCTS_PER_PAGE = 12
+const PRODUCTS_PER_PAGE = 50
 
 export default function Home() {
   const { t } = useTranslation()
@@ -128,11 +126,7 @@ export default function Home() {
       <>
         <Navbar />
         <div className="container mx-auto px-4 py-8">
-          <div className="text-center mb-8 pt-12">
-            <h1 className="text-4xl font-serif mb-4">{t("catalogue.title")}</h1>
-            <p className="text-muted-foreground">{t("catalogue.loading")}</p>
-          </div>
-          <ProductSkeleton count={12} />
+          <ProductSkeleton count={50} />
         </div>
         <Footer />
       </>
@@ -160,91 +154,63 @@ export default function Home() {
     <>
       <Navbar />
 
-      <main className="container mx-auto px-4 py-8">
-        {/* Catalogue Header */}
-        <div className="text-center mb-12 pt-12">
-          <h1 className="text-4xl font-serif mb-4">{t("catalogue.title")}</h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            {t("catalogue.subtitle")}
-          </p>
-        </div>
-
-        {/* Search and Filters Bar */}
-        <Card className="mb-8 mt-12">
-          <CardContent className="p-6">
-            <div className="flex flex-col lg:flex-row gap-4">
-              {/* Search */}
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder={t("catalogue.searchPlaceholder")}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
-                />
+      <main className="container mx-auto px-4 pt-24">
+        {/* Horizontal Categories Row */}
+        <div className="mb-6">
+          <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+            {/* All Categories Card */}
+            <div
+              className="flex-shrink-0 cursor-pointer"
+              onClick={() => setSelectedCategories([])}
+            >
+              <div className={`relative w-20 h-20 rounded-lg overflow-hidden transition-all duration-300 ${selectedCategories.length === 0
+                ? 'ring-2 ring-primary shadow-lg'
+                : 'hover:shadow-md'
+                }`}>
+                <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/40 flex items-center justify-center">
+                  <Grid className="h-8 w-8 text-primary" />
+                </div>
+                <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-300"></div>
               </div>
-
-              {/* Sort */}
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-full lg:w-48">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="newest">{t("catalogue.sort.newest")}</SelectItem>
-                  <SelectItem value="oldest">{t("catalogue.sort.oldest")}</SelectItem>
-                  <SelectItem value="price-low">{t("catalogue.sort.priceLow")}</SelectItem>
-                  <SelectItem value="price-high">{t("catalogue.sort.priceHigh")}</SelectItem>
-                  <SelectItem value="name">{t("catalogue.sort.name")}</SelectItem>
-                </SelectContent>
-              </Select>
-
-              {/* Mobile Filters */}
-              <Sheet>
-                <SheetTrigger asChild>
-                  <Button variant="outline" className="lg:hidden">
-                    <SlidersHorizontal className="h-4 w-4 mr-2" />
-                    {t("catalogue.filters")}
-                  </Button>
-                </SheetTrigger>
-                <SheetContent>
-                  <SheetHeader>
-                    <SheetTitle>{t("catalogue.filters")}</SheetTitle>
-                  </SheetHeader>
-                  <div className="py-6">
-                    <FilterContent
-                      categories={categories || []}
-                      selectedCategories={selectedCategories}
-                      selectedFilters={selectedFilters}
-                      onCategoryToggle={handleCategoryToggle}
-                      onFilterToggle={handleFilterToggle}
-                      onClearAll={clearAllFilters}
-                    />
-                  </div>
-                </SheetContent>
-              </Sheet>
-
-              {/* View Mode Toggle */}
-              <div className="flex border rounded-lg p-1">
-                <Button
-                  variant={viewMode === "grid" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setViewMode("grid")}
-                  className="px-3"
-                >
-                  <Grid className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant={viewMode === "list" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setViewMode("list")}
-                  className="px-3"
-                >
-                  <List className="h-4 w-4" />
-                </Button>
-              </div>
+              <p className="text-xs text-center mt-2 font-medium text-muted-foreground">
+                {t("catalogue.allCategories")}
+              </p>
             </div>
-          </CardContent>
-        </Card>
+
+            {/* Category Image Cards */}
+            {categories?.map(category => (
+              <div
+                key={category.id}
+                className="flex-shrink-0 cursor-pointer p-1"
+                onClick={() => handleCategoryToggle(category.slug)}
+              >
+                <div className={`relative w-20 h-20 rounded-lg overflow-hidden transition-all duration-300 ${selectedCategories.includes(category.slug)
+                  ? 'ring-2 ring-primary shadow-lg'
+                  : 'hover:shadow-md'
+                  }`}>
+                  <img
+                    src={category.image || "/placeholder.svg"}
+                    alt={category.name}
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-300"></div>
+                  {selectedCategories.includes(category.slug) && (
+                    <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
+                      <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center">
+                        <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <p className="text-xs text-center mt-2 font-medium text-muted-foreground line-clamp-1">
+                  {category.name}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
 
         <div className="flex gap-8">
           {/* Desktop Filters Sidebar */}
@@ -265,38 +231,54 @@ export default function Home() {
 
           {/* Products Grid */}
           <div className="flex-1" id="products-section">
-            {/* Results Info */}
+            {/* Results Info and Mobile Filters */}
             <div className="flex items-center justify-between mb-6">
+              {/* Mobile Filters and View Mode */}
               <div className="flex items-center gap-2">
-                <p className="text-sm text-muted-foreground">
-                  {t("catalogue.showing")} {allProducts.length} {t("catalogue.of")} {totalProducts} {t("catalogue.products")}
-                </p>
-                {(selectedCategories.length > 0 || selectedFilters.length > 0 || searchQuery) && (
-                  <Button variant="ghost" size="sm" onClick={clearAllFilters}>
-                    {t("catalogue.clearFilters")}
-                  </Button>
-                )}
+                {/* Mobile Filters */}
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <Button variant="outline" className="lg:hidden">
+                      {t("catalogue.filters")}
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent>
+                    <SheetHeader>
+                      <SheetTitle>{t("catalogue.filters")}</SheetTitle>
+                    </SheetHeader>
+                    <div className="py-6">
+                      <FilterContent
+                        categories={categories || []}
+                        selectedCategories={selectedCategories}
+                        selectedFilters={selectedFilters}
+                        onCategoryToggle={handleCategoryToggle}
+                        onFilterToggle={handleFilterToggle}
+                        onClearAll={clearAllFilters}
+                      />
+                    </div>
+                  </SheetContent>
+                </Sheet>
               </div>
-
-              {/* Active Filters */}
-              {(selectedCategories.length > 0 || selectedFilters.length > 0) && (
-                <div className="flex flex-wrap gap-2">
-                  {selectedCategories.map(categorySlug => {
-                    const category = categories?.find(c => c.slug === categorySlug)
-                    return (
-                      <Badge key={categorySlug} variant="secondary" className="cursor-pointer" onClick={() => handleCategoryToggle(categorySlug)}>
-                        {category?.name} ×
-                      </Badge>
-                    )
-                  })}
-                  {selectedFilters.map(filter => (
-                    <Badge key={filter} variant="secondary" className="cursor-pointer" onClick={() => handleFilterToggle(filter)}>
-                      {t(`catalogue.filter.${filter}`)} ×
-                    </Badge>
-                  ))}
-                </div>
-              )}
             </div>
+
+            {/* Active Filters */}
+            {(selectedCategories.length > 0 || selectedFilters.length > 0) && (
+              <div className="flex flex-wrap gap-2 mb-6">
+                {selectedCategories.map(categorySlug => {
+                  const category = categories?.find(c => c.slug === categorySlug)
+                  return (
+                    <Badge key={categorySlug} variant="secondary" className="cursor-pointer" onClick={() => handleCategoryToggle(categorySlug)}>
+                      {category?.name} ×
+                    </Badge>
+                  )
+                })}
+                {selectedFilters.map(filter => (
+                  <Badge key={filter} variant="secondary" className="cursor-pointer" onClick={() => handleFilterToggle(filter)}>
+                    {t(`catalogue.filter.${filter}`)} ×
+                  </Badge>
+                ))}
+              </div>
+            )}
 
             {/* Products Display */}
             {allProducts.length === 0 ? (
