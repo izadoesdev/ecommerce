@@ -60,18 +60,30 @@
     "customerReviews": "Customer Reviews",
     "writeReview": "Write a Review",
     "viewDetails": "View Details",
+    "viewAll": "View All",
+    "wishlist": "Add to Wishlist",
+    "quickView": "Quick View",
     "loadingProduct": "Loading product...",
     "noReviews": "There are no reviews for this product yet. Be the first to share your thoughts!"
   },
   "cart": {
     "title": "Your Shopping Cart",
     "empty": "Your cart is currently empty.",
+    "emptyMessage": "Start shopping to add items to your cart.",
     "browse": "Browse Products",
     "subtotal": "Subtotal",
     "checkout": "Proceed to Checkout",
     "continueShopping": "Continue Shopping",
     "remove": "Remove",
-    "itemAdded": "Item added to cart"
+    "itemAdded": "Item added to cart",
+    "addedToCart": "has been added to your cart",
+    "clearCart": "Clear Cart",
+    "orderSummary": "Order Summary",
+    "shipping": "Shipping",
+    "freeShipping": "Free",
+    "tax": "Tax",
+    "total": "Total",
+    "processing": "Processing..."
   },
   "categories": {
     "shopByCategory": "Shop By Category",
@@ -107,6 +119,38 @@
       "price-desc": "Price: High to Low"
     }
   },
+  "catalogue": {
+    "title": "Product Catalogue",
+    "subtitle": "Explore our complete collection of carefully curated products for your home.",
+    "loading": "Loading our collection...",
+    "searchPlaceholder": "Search products, categories, or descriptions...",
+    "filters": "Filters",
+    "clearAll": "Clear All",
+    "clearFilters": "Clear Filters",
+    "categories": "Categories",
+    "specialFilters": "Special Filters",
+    "showing": "Showing",
+    "of": "of",
+    "products": "products",
+    "noProducts": "No Products Found",
+    "noProductsDesc": "Try adjusting your filters or search terms to find what you're looking for.",
+    "sort": {
+      "newest": "Newest First",
+      "oldest": "Oldest First",
+      "priceLow": "Price: Low to High",
+      "priceHigh": "Price: High to Low",
+      "name": "Name A-Z"
+    },
+    "filter": {
+      "featured": "Featured",
+      "new": "New Arrivals",
+      "sale": "On Sale"
+    },
+    "previous": "Previous",
+    "next": "Next",
+    "loadingMore": "Loading more products...",
+    "allProductsLoaded": "You've reached the end! All products have been loaded."
+  },
   "error": {
     "notFound": "Page Not Found",
     "notFoundMessage": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
@@ -122,18 +166,31 @@
     "storeDescription": "MAISON offers a curated selection of modern home decor, furniture, and accessories for the design-conscious individual.",
     "shop": "Shop",
     "allProducts": "All Products",
+    "decor": "Home Decor",
+    "furniture": "Furniture",
+    "kitchen": "Kitchen",
+    "textiles": "Textiles",
     "company": "Company",
     "about": "About Us",
+    "aboutUs": "About Us",
     "contact": "Contact",
+    "contactUs": "Contact Us",
+    "blog": "Blog",
     "careers": "Careers",
     "support": "Support",
     "shipping": "Shipping & Returns",
+    "shippingPolicy": "Shipping & Returns",
     "faq": "FAQ",
     "legal": "Legal",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
     "newsletter": "Newsletter",
     "newsletterDesc": "Subscribe to receive updates on new arrivals and special offers.",
+    "emailPlaceholder": "Enter your email address",
+    "subscribe": "Subscribe",
+    "address": "123 Design Street, Creative District, NY 10001",
+    "phone": "+1 (555) 123-4567",
+    "email": "hello@maison.com",
     "copyright": "© 2024 MAISON. All rights reserved."
   }
 }

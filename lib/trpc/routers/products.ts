@@ -86,30 +86,213 @@ export const productsRouter = router({
             return product
         }),
 
-    // Full-text search for products with dynamic sorting
+    // Full-text search for products with dynamic sorting and pagination
     search: publicProcedure
         .input(z.object({
-            query: z.string(),
-            sortBy: z.enum(['relevance', 'newest', 'price-asc', 'price-desc']).default('relevance'),
+            query: z.string().default(''),
+            sortBy: z.enum(['relevance', 'newest', 'oldest', 'price-low', 'price-high', 'name']).default('newest'),
+            categories: z.array(z.string()).default([]),
+            filters: z.array(z.string()).default([]),
+            page: z.number().min(1).default(1),
+            limit: z.number().min(1).max(50).default(12),
         }))
         .query(async ({ ctx, input }) => {
-            const { query } = input;
+            const { query, sortBy, categories, filters, page, limit } = input;
+            const skip = (page - 1) * limit;
 
-            return await ctx.db.product.findMany({
-                where: {
-                    status: 'PUBLISHED',
-                    OR: [
-                        { name: { contains: query, mode: 'insensitive' } },
-                        { description: { contains: query, mode: 'insensitive' } },
-                        { tags: { has: query.toLowerCase() } },
-                    ],
-                },
-                include: {
-                    category: true,
-                    variants: true,
-                },
-                orderBy: { createdAt: 'desc' },
-            });
+            // Build where clause
+            const whereClause: any = {
+                status: 'PUBLISHED',
+            };
+
+            // Add search query
+            if (query) {
+                whereClause.OR = [
+                    { name: { contains: query, mode: 'insensitive' } },
+                    { description: { contains: query, mode: 'insensitive' } },
+                    { tags: { has: query.toLowerCase() } },
+                ];
+            }
+
+            // Add category filters
+            if (categories.length > 0) {
+                whereClause.category = {
+                    slug: { in: categories }
+                };
+            }
+
+            // Add special filters
+            if (filters.includes('featured')) {
+                whereClause.featured = true;
+            }
+            if (filters.includes('new')) {
+                whereClause.newArrival = true;
+            }
+            if (filters.includes('sale')) {
+                whereClause.sale = true;
+            }
+
+            // Build order by clause
+            let orderBy: any = { createdAt: 'desc' };
+            switch (sortBy) {
+                case 'newest':
+                    orderBy = { createdAt: 'desc' };
+                    break;
+                case 'oldest':
+                    orderBy = { createdAt: 'asc' };
+                    break;
+                case 'name':
+                    orderBy = { name: 'asc' };
+                    break;
+                case 'price-low':
+                case 'price-high':
+                    // For price sorting, we'll need to handle this differently since price is in variants
+                    // For now, we'll use createdAt and handle price sorting in the application
+                    orderBy = { createdAt: 'desc' };
+                    break;
+                default:
+                    orderBy = { createdAt: 'desc' };
+            }
+
+            // Get products and total count
+            const [products, total] = await Promise.all([
+                ctx.db.product.findMany({
+                    where: whereClause,
+                    include: {
+                        category: true,
+                        variants: true,
+                    },
+                    orderBy,
+                    skip,
+                    take: limit,
+                }),
+                ctx.db.product.count({
+                    where: whereClause,
+                })
+            ]);
+
+            // Handle price sorting in application since it's in variants
+            if (sortBy === 'price-low' || sortBy === 'price-high') {
+                products.sort((a, b) => {
+                    const priceA = a.variants[0]?.salePrice || a.variants[0]?.price || 0;
+                    const priceB = b.variants[0]?.salePrice || b.variants[0]?.price || 0;
+                    return sortBy === 'price-low' ? priceA - priceB : priceB - priceA;
+                });
+            }
+
+            return {
+                products,
+                total,
+                page,
+                limit,
+                totalPages: Math.ceil(total / limit),
+            };
+        }),
+
+    // Infinite scroll version of search
+    searchInfinite: publicProcedure
+        .input(z.object({
+            query: z.string().default(''),
+            sortBy: z.enum(['relevance', 'newest', 'oldest', 'price-low', 'price-high', 'name']).default('newest'),
+            categories: z.array(z.string()).default([]),
+            filters: z.array(z.string()).default([]),
+            limit: z.number().min(1).max(50).default(12),
+            cursor: z.number().nullish(),
+        }))
+        .query(async ({ ctx, input }) => {
+            const { query, sortBy, categories, filters, limit, cursor } = input;
+            const page = cursor || 1;
+            const skip = (page - 1) * limit;
+
+            // Build where clause
+            const whereClause: any = {
+                status: 'PUBLISHED',
+            };
+
+            // Add search query
+            if (query) {
+                whereClause.OR = [
+                    { name: { contains: query, mode: 'insensitive' } },
+                    { description: { contains: query, mode: 'insensitive' } },
+                    { tags: { has: query.toLowerCase() } },
+                ];
+            }
+
+            // Add category filters
+            if (categories.length > 0) {
+                whereClause.category = {
+                    slug: { in: categories }
+                };
+            }
+
+            // Add special filters
+            if (filters.includes('featured')) {
+                whereClause.featured = true;
+            }
+            if (filters.includes('new')) {
+                whereClause.newArrival = true;
+            }
+            if (filters.includes('sale')) {
+                whereClause.sale = true;
+            }
+
+            // Build order by clause
+            let orderBy: any = { createdAt: 'desc' };
+            switch (sortBy) {
+                case 'newest':
+                    orderBy = { createdAt: 'desc' };
+                    break;
+                case 'oldest':
+                    orderBy = { createdAt: 'asc' };
+                    break;
+                case 'name':
+                    orderBy = { name: 'asc' };
+                    break;
+                case 'price-low':
+                case 'price-high':
+                    orderBy = { createdAt: 'desc' };
+                    break;
+                default:
+                    orderBy = { createdAt: 'desc' };
+            }
+
+            // Get products and total count
+            const [products, total] = await Promise.all([
+                ctx.db.product.findMany({
+                    where: whereClause,
+                    include: {
+                        category: true,
+                        variants: true,
+                    },
+                    orderBy,
+                    skip,
+                    take: limit,
+                }),
+                ctx.db.product.count({
+                    where: whereClause,
+                })
+            ]);
+
+            // Handle price sorting in application since it's in variants
+            if (sortBy === 'price-low' || sortBy === 'price-high') {
+                products.sort((a, b) => {
+                    const priceA = a.variants[0]?.salePrice || a.variants[0]?.price || 0;
+                    const priceB = b.variants[0]?.salePrice || b.variants[0]?.price || 0;
+                    return sortBy === 'price-low' ? priceA - priceB : priceB - priceA;
+                });
+            }
+
+            const totalPages = Math.ceil(total / limit);
+            const nextCursor = page < totalPages ? page + 1 : undefined;
+
+            return {
+                products,
+                total,
+                page,
+                limit,
+                totalPages,
+                nextCursor,
+            };
         }),
 
     // Get related products (from the same category)

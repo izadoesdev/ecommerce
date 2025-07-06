@@ -4,7 +4,6 @@ import Link from "next/link"
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { FadeIn } from "@/components/animations/fade-in"
 import { useTranslation } from "@/lib/i18n/client"
 
 export function Footer() {
@@ -14,7 +13,7 @@ export function Footer() {
     <footer className="pt-16 pb-8 bg-accent/30 dark:bg-gray-900">
       <div className="container px-4 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
-          <FadeIn className="md:col-span-4" delay={0.1}>
+          <div className="md:col-span-4">
             <div>
               <h3 className="text-2xl font-serif mb-6">MAISON</h3>
               <p className="text-muted-foreground mb-6 max-w-xs">{t("footer.storeDescription")}</p>
@@ -30,9 +29,9 @@ export function Footer() {
                 </Button>
               </div>
             </div>
-          </FadeIn>
+          </div>
 
-          <FadeIn className="md:col-span-2" delay={0.2}>
+          <div className="md:col-span-2">
             <div>
               <h4 className="text-base font-medium mb-4">{t("footer.shop")}</h4>
               <ul className="space-y-2">
@@ -78,9 +77,9 @@ export function Footer() {
                 </li>
               </ul>
             </div>
-          </FadeIn>
+          </div>
 
-          <FadeIn className="md:col-span-2" delay={0.3}>
+          <div className="md:col-span-2">
             <div>
               <h4 className="text-base font-medium mb-4">{t("footer.company")}</h4>
               <ul className="space-y-2">
@@ -106,9 +105,9 @@ export function Footer() {
                 </li>
               </ul>
             </div>
-          </FadeIn>
+          </div>
 
-          <FadeIn className="md:col-span-4" delay={0.4}>
+          <div className="md:col-span-4">
             <div>
               <h4 className="text-base font-medium mb-4">{t("footer.newsletter")}</h4>
               <p className="text-sm text-muted-foreground mb-4">{t("footer.newsletterDesc")}</p>
@@ -134,7 +133,7 @@ export function Footer() {
                 </div>
               </div>
             </div>
-          </FadeIn>
+          </div>
         </div>
 
         <div className="pt-6 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">

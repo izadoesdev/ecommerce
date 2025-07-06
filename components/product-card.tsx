@@ -9,10 +9,8 @@ import { ShoppingCart, Heart, Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/components/cart-provider"
-import { FadeIn } from "@/components/animations/fade-in"
 import { useTranslation } from "@/lib/i18n/client"
 import type { ProductWithRelations } from "@/lib/products"
-import { motion } from "framer-motion"
 import { CustomContextMenu } from "@/components/custom-context-menu"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
@@ -48,7 +46,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
   }
 
   return (
-    <FadeIn delay={index * 0.1} className="group h-full">
+    <div className="group h-full">
       <CustomContextMenu
         product={product}
         onQuickView={handleQuickView}
@@ -88,10 +86,9 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
               </div>
 
               {/* Quick actions overlay */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: isHovered ? 1 : 0 }}
-                className="absolute inset-0 bg-black/5 flex items-center justify-center gap-3 transition-opacity duration-300"
+              <div
+                className={`absolute inset-0 bg-black/5 flex items-center justify-center gap-3 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'
+                  }`}
               >
                 <Button
                   size="sm"
@@ -123,7 +120,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
                 >
                   <Eye className="h-4 w-4" />
                 </Button>
-              </motion.div>
+              </div>
             </div>
 
             {/* Product details */}
@@ -216,7 +213,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           </div>
         </DialogContent>
       </Dialog>
-    </FadeIn>
+    </div>
   )
 }
 

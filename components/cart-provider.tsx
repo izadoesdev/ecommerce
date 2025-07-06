@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import { useToast } from "@/components/ui/use-toast"
+import { useTranslation } from "@/lib/i18n/client"
 import type { ProductWithRelations } from "@/lib/products"
 
 export interface CartItem extends ProductWithRelations {
@@ -24,6 +25,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined)
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
   const { toast } = useToast()
+  const { t } = useTranslation()
 
   // Calculate derived values
   const itemCount = items.reduce((total, item) => total + item.quantity, 0)
@@ -67,8 +69,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     })
 
     toast({
-      title: "Added to cart",
-      description: `${product.name} (${quantity}) has been added to your cart.`,
+      title: t("cart.itemAdded"),
+      description: `${product.name} (${quantity}) ${t("cart.addedToCart")}.`,
     })
   }
 
