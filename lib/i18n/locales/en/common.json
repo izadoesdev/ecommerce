@@ -15,6 +15,101 @@
     "account": "My Account",
     "wishlist": "Wishlist"
   },
+  "admin": {
+    "dashboard": "Dashboard",
+    "products": "Products",
+    "orders": "Orders",
+    "customers": "Customers",
+    "analytics": "Analytics",
+    "navigation": "Navigation Menu",
+    "myAccount": "My Account",
+    "settings": "Settings",
+    "support": "Support",
+    "logout": "Logout",
+    "notifications": "Toggle notifications",
+    "toggleNavigation": "Toggle navigation menu",
+    "toggleUserMenu": "Toggle user menu",
+    "dashboard": {
+      "title": "Dashboard",
+      "totalRevenue": "Total Revenue",
+      "subscriptions": "Subscriptions",
+      "sales": "Sales",
+      "activeNow": "Active Now",
+      "fromLastMonth": "from last month",
+      "sinceLastHour": "since last hour",
+      "transactions": "Transactions",
+      "transactionsDesc": "Recent transactions from your store.",
+      "viewAll": "View All",
+      "customer": "Customer",
+      "type": "Type",
+      "status": "Status",
+      "date": "Date",
+      "amount": "Amount",
+      "sale": "Sale",
+      "refund": "Refund",
+      "approved": "Approved",
+      "declined": "Declined"
+    },
+    "products": {
+      "title": "Products",
+      "add": "Add Product",
+      "cardTitle": "Product Management",
+      "cardDescription": "Manage your product catalog, add new products, and update existing ones.",
+      "table": {
+        "name": "Name",
+        "status": "Status",
+        "price": "Price",
+        "stock": "Stock",
+        "createdAt": "Created At"
+      },
+      "form": {
+        "sheetTitle": "Add New Product",
+        "sheetDescription": "Fill in the product details below to add a new product to your catalog.",
+        "submit": "Add Product",
+        "submitting": "Adding Product...",
+        "labels": {
+          "name": "Product Name",
+          "description": "Description",
+          "price": "Price",
+          "stock": "Stock",
+          "images": "Product Images",
+          "category": "Category",
+          "status": "Status"
+        },
+        "placeholders": {
+          "category": "Select a category",
+          "status": "Select status"
+        }
+      },
+      "categoryDialog": {
+        "trigger": "Add New Category",
+        "title": "Add New Category",
+        "description": "Create a new product category to organize your products.",
+        "submit": "Add Category",
+        "submitting": "Adding Category...",
+        "labels": {
+          "name": "Category Name",
+          "description": "Description",
+          "imageUrl": "Image URL"
+        }
+      },
+      "featured": "Featured",
+      "newArrival": "New Arrival",
+      "sale": "Sale"
+    },
+    "productStatus": {
+      "DRAFT": "Draft",
+      "PUBLISHED": "Published",
+      "ARCHIVED": "Archived"
+    },
+    "messages": {
+      "productAdded": "Product added successfully!",
+      "productUpdated": "Product updated successfully!",
+      "productDeleted": "Product deleted successfully!",
+      "productsDeleted": "Products deleted successfully!",
+      "categoryAdded": "Category added successfully!"
+    }
+  },
   "home": {
     "heroTitle": "Create a Space That Feels Like Home",
     "heroSubtitle": "Discover our curated collection of home decor and furniture for your modern lifestyle.",

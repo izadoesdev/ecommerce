@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState } from "react"
-import { useFormState, useFormStatus } from "react-dom"
+import { useEffect, useState, useActionState } from "react"
+import { useFormStatus } from "react-dom"
 import { DollarSign } from "lucide-react"
 import { toast } from "sonner"
 import { useTranslation } from "@/lib/i18n/client"
@@ -69,7 +69,7 @@ export function ProductForm({
 }) {
     const { t } = useTranslation()
     const action = product ? updateProduct.bind(null, product.id) : addProduct
-    const [state, formAction] = useFormState(action, initialState)
+    const [state, formAction] = useActionState(action, initialState)
 
     const initialImages = state.data?.images ?? product?.variants[0]?.images ?? []
     const [images, setImages] = useState<string[]>(initialImages as string[])
@@ -115,7 +115,9 @@ export function ProductForm({
                     <p className="text-sm text-red-500 mt-1">{state.errors.description[0]}</p>
                 )}
             </div>
-            <div className="grid grid-cols-2 gap-4">
+
+            {/* Price and Stock - Mobile Responsive Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <Label htmlFor="price">{t("admin.products.form.labels.price")}</Label>
                     <div className="relative">
@@ -142,6 +144,7 @@ export function ProductForm({
                     )}
                 </div>
             </div>
+
             <div>
                 <Label>{t("admin.products.form.labels.images")}</Label>
                 <ImageUpload name="images" value={images} onChange={setImages} />
@@ -149,7 +152,9 @@ export function ProductForm({
                     <p className="text-sm text-red-500 mt-1">{state.errors.images[0]}</p>
                 )}
             </div>
-            <div className="grid grid-cols-2 gap-4">
+
+            {/* Category and Status - Mobile Responsive Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <Label htmlFor="categoryId">{t("admin.products.form.labels.category")}</Label>
                     <Select
@@ -194,8 +199,8 @@ export function ProductForm({
                 </div>
             </div>
 
-            {/* Product flags */}
-            <div className="grid grid-cols-3 gap-4">
+            {/* Product flags - Mobile Responsive Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="flex items-center space-x-2">
                     <Checkbox
                         id="featured"

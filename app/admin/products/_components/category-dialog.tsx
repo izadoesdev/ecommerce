@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState } from "react"
-import { useFormState, useFormStatus } from "react-dom"
+import { useEffect, useState, useActionState } from "react"
+import { useFormStatus } from "react-dom"
 import { PlusCircle } from "lucide-react"
 import { toast } from "sonner"
 import { useTranslation } from "@/lib/i18n/client"
@@ -45,7 +45,7 @@ function SubmitButton() {
     const { t } = useTranslation()
     const { pending } = useFormStatus()
     return (
-        <Button type="submit" disabled={pending}>
+        <Button type="submit" disabled={pending} className="w-full sm:w-auto">
             {pending ? t("admin.products.categoryDialog.submitting") : t("admin.products.categoryDialog.submit")}
         </Button>
     )
@@ -54,7 +54,7 @@ function SubmitButton() {
 export function CategoryDialog() {
     const { t } = useTranslation()
     const [open, setOpen] = useState(false)
-    const [state, formAction] = useFormState(addCategory, initialState)
+    const [state, formAction] = useActionState(addCategory, initialState)
 
     useEffect(() => {
         if (state.success) {
@@ -73,7 +73,7 @@ export function CategoryDialog() {
                     {t("admin.products.categoryDialog.trigger")}
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="w-[95vw] max-w-[425px] max-h-[90vh] overflow-y-auto">
                 <form action={formAction}>
                     <DialogHeader>
                         <DialogTitle>{t("admin.products.categoryDialog.title")}</DialogTitle>
@@ -110,7 +110,7 @@ export function CategoryDialog() {
                             )}
                         </div>
                     </div>
-                    <DialogFooter>
+                    <DialogFooter className="flex flex-col sm:flex-row gap-2">
                         <SubmitButton />
                     </DialogFooter>
                 </form>

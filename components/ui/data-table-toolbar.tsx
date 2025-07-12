@@ -22,15 +22,15 @@ export function DataTableToolbar<TData>({
     const selectedRowIds = table.getFilteredSelectedRowModel().rows.map(row => (row.original as any).id)
 
     return (
-        <div className="flex items-center justify-between">
-            <div className="flex flex-1 items-center space-x-2">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:space-x-2">
                 <Input
                     placeholder="Filter by name..."
                     value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
                         table.getColumn("name")?.setFilterValue(event.target.value)
                     }
-                    className="h-8 w-[150px] lg:w-[250px]"
+                    className="h-8 w-full sm:w-[150px] lg:w-[250px]"
                 />
                 {table.getColumn("status") && (
                     <DataTableFacetedFilter
@@ -39,25 +39,27 @@ export function DataTableToolbar<TData>({
                         options={statuses}
                     />
                 )}
-                {isFiltered && (
-                    <Button
-                        variant="ghost"
-                        onClick={() => table.resetColumnFilters()}
-                        className="h-8 px-2 lg:px-3"
-                    >
-                        Reset
-                        <X className="ml-2 h-4 w-4" />
-                    </Button>
-                )}
-                {selectedRowIds.length > 0 && onDeleteSelected && (
-                    <Button
-                        variant="destructive"
-                        onClick={() => onDeleteSelected(selectedRowIds)}
-                        className="h-8 px-2 lg:px-3"
-                    >
-                        Delete {selectedRowIds.length} selected
-                    </Button>
-                )}
+                <div className="flex items-center gap-2">
+                    {isFiltered && (
+                        <Button
+                            variant="ghost"
+                            onClick={() => table.resetColumnFilters()}
+                            className="h-8 px-2 lg:px-3"
+                        >
+                            Reset
+                            <X className="ml-2 h-4 w-4" />
+                        </Button>
+                    )}
+                    {selectedRowIds.length > 0 && onDeleteSelected && (
+                        <Button
+                            variant="destructive"
+                            onClick={() => onDeleteSelected(selectedRowIds)}
+                            className="h-8 px-2 lg:px-3"
+                        >
+                            Delete {selectedRowIds.length} selected
+                        </Button>
+                    )}
+                </div>
             </div>
             <DataTableViewOptions table={table} />
         </div>

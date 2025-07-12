@@ -16,22 +16,27 @@ export default async function ProductsPage() {
     const categories = await getCategories()
 
     return (
-        <div className="flex flex-col gap-6">
-            <div className="flex items-center">
-                <h1 className="text-lg font-semibold md:text-2xl">{t("admin.products.title")}</h1>
-                <div className="ml-auto flex items-center gap-2">
+        <div className="flex flex-col gap-4 sm:gap-6">
+            {/* Mobile Responsive Header */}
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center px-4 sm:px-0">
+                <h1 className="text-lg font-semibold sm:text-xl lg:text-2xl">{t("admin.products.title")}</h1>
+                <div className="flex items-center gap-2 sm:ml-auto">
                     <AddProductSheet categories={categories} />
                 </div>
             </div>
-            <Card>
-                <CardHeader>
+
+            {/* Products Table Card - Full screen on mobile */}
+            <Card className="sm:mx-0 sm:rounded-lg sm:border">
+                <CardHeader className="px-4 sm:px-6">
                     <CardTitle>{t("admin.products.cardTitle")}</CardTitle>
                     <CardDescription>
                         {t("admin.products.cardDescription")}
                     </CardDescription>
                 </CardHeader>
-                <CardContent>
-                    <ProductsTable products={products} />
+                <CardContent className="p-0">
+                    <div className="overflow-x-auto">
+                        <ProductsTable products={products} />
+                    </div>
                 </CardContent>
             </Card>
         </div>

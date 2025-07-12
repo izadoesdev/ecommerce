@@ -25,21 +25,24 @@ export function AddProductSheet({ categories }: { categories: Categories }) {
     return (
         <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-                <Button size="sm" className="h-8 gap-1">
+                <Button size="sm" className="h-8 gap-1 w-full sm:w-auto">
                     <PlusCircle className="h-3.5 w-3.5" />
-                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                    <span className="hidden sm:inline">
                         {t("admin.products.add")}
                     </span>
+                    <span className="sm:hidden">Add</span>
                 </Button>
             </SheetTrigger>
-            <SheetContent className="overflow-y-auto">
+            <SheetContent className="overflow-y-auto w-full sm:max-w-md">
                 <SheetHeader>
                     <SheetTitle>{t("admin.products.form.sheetTitle")}</SheetTitle>
                     <SheetDescription>
                         {t("admin.products.form.sheetDescription")}
                     </SheetDescription>
                 </SheetHeader>
-                <ProductForm categories={categories} onSuccess={() => setOpen(false)} />
+                <div className="mt-6">
+                    <ProductForm categories={categories} onSuccess={() => setOpen(false)} />
+                </div>
             </SheetContent>
         </Sheet>
     )

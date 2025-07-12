@@ -15,6 +15,101 @@
     "account": "Mon Compte",
     "wishlist": "Favoris"
   },
+  "admin": {
+    "dashboard": "Tableau de Bord",
+    "products": "Produits",
+    "orders": "Commandes",
+    "customers": "Clients",
+    "analytics": "Analyses",
+    "navigation": "Menu de Navigation",
+    "myAccount": "Mon Compte",
+    "settings": "Paramètres",
+    "support": "Support",
+    "logout": "Déconnexion",
+    "notifications": "Basculer les notifications",
+    "toggleNavigation": "Basculer le menu de navigation",
+    "toggleUserMenu": "Basculer le menu utilisateur",
+    "dashboard": {
+      "title": "Tableau de Bord",
+      "totalRevenue": "Revenus Totaux",
+      "subscriptions": "Abonnements",
+      "sales": "Ventes",
+      "activeNow": "Actifs Maintenant",
+      "fromLastMonth": "du mois dernier",
+      "sinceLastHour": "depuis la dernière heure",
+      "transactions": "Transactions",
+      "transactionsDesc": "Transactions récentes de votre boutique.",
+      "viewAll": "Voir Tout",
+      "customer": "Client",
+      "type": "Type",
+      "status": "Statut",
+      "date": "Date",
+      "amount": "Montant",
+      "sale": "Vente",
+      "refund": "Remboursement",
+      "approved": "Approuvé",
+      "declined": "Refusé"
+    },
+    "products": {
+      "title": "Produits",
+      "add": "Ajouter un Produit",
+      "cardTitle": "Gestion des Produits",
+      "cardDescription": "Gérez votre catalogue de produits, ajoutez de nouveaux produits et mettez à jour les existants.",
+      "table": {
+        "name": "Nom",
+        "status": "Statut",
+        "price": "Prix",
+        "stock": "Stock",
+        "createdAt": "Créé le"
+      },
+      "form": {
+        "sheetTitle": "Ajouter un Nouveau Produit",
+        "sheetDescription": "Remplissez les détails du produit ci-dessous pour ajouter un nouveau produit à votre catalogue.",
+        "submit": "Ajouter le Produit",
+        "submitting": "Ajout du Produit...",
+        "labels": {
+          "name": "Nom du Produit",
+          "description": "Description",
+          "price": "Prix",
+          "stock": "Stock",
+          "images": "Images du Produit",
+          "category": "Catégorie",
+          "status": "Statut"
+        },
+        "placeholders": {
+          "category": "Sélectionner une catégorie",
+          "status": "Sélectionner le statut"
+        }
+      },
+      "categoryDialog": {
+        "trigger": "Ajouter une Nouvelle Catégorie",
+        "title": "Ajouter une Nouvelle Catégorie",
+        "description": "Créez une nouvelle catégorie de produits pour organiser vos produits.",
+        "submit": "Ajouter la Catégorie",
+        "submitting": "Ajout de la Catégorie...",
+        "labels": {
+          "name": "Nom de la Catégorie",
+          "description": "Description",
+          "imageUrl": "URL de l'Image"
+        }
+      },
+      "featured": "En Vedette",
+      "newArrival": "Nouvelle Arrivée",
+      "sale": "Solde"
+    },
+    "productStatus": {
+      "DRAFT": "Brouillon",
+      "PUBLISHED": "Publié",
+      "ARCHIVED": "Archivé"
+    },
+    "messages": {
+      "productAdded": "Produit ajouté avec succès !",
+      "productUpdated": "Produit mis à jour avec succès !",
+      "productDeleted": "Produit supprimé avec succès !",
+      "productsDeleted": "Produits supprimés avec succès !",
+      "categoryAdded": "Catégorie ajoutée avec succès !"
+    }
+  },
   "home": {
     "heroTitle": "Créez un Espace Qui Vous Ressemble",
     "heroSubtitle": "Découvrez notre collection de décoration et de mobilier pour votre style de vie moderne.",
@@ -152,4 +247,3 @@
     "shippingPolicy": "Politique de Livraison"
   }
 }
-

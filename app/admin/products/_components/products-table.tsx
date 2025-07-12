@@ -4,7 +4,7 @@ import { useMemo } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import type { ColumnDef } from "@tanstack/react-table"
-import { MoreHorizontal } from "lucide-react"
+import { MoreHorizontal, Edit, Trash2 } from "lucide-react"
 import { toast } from "sonner"
 
 import { Badge } from "@/components/ui/badge"
@@ -82,9 +82,9 @@ export function ProductsTable({ products }: { products: Product[] }) {
                             <Image
                                 alt={product.name}
                                 className="aspect-square rounded-md object-cover"
-                                height="64"
+                                height="40"
                                 src={product.variants[0]?.images[0] ?? "/placeholder.svg"}
-                                width="64"
+                                width="40"
                             />
                         </Link>
                     )
@@ -99,9 +99,17 @@ export function ProductsTable({ products }: { products: Product[] }) {
                 cell: ({ row }) => {
                     const product = row.original
                     return (
-                        <Link href={`/admin/products/${product.slug}`} className="hover:underline">
-                            {product.name}
-                        </Link>
+                        <div className="flex flex-col gap-1 min-w-0">
+                            <Link href={`/admin/products/${product.slug}`} className="hover:underline font-medium truncate">
+                                {product.name}
+                            </Link>
+                            <div className="text-xs text-muted-foreground sm:hidden">
+                                {formatCurrency(product.variants[0]?.price ?? 0)}
+                            </div>
+                            <div className="text-xs text-muted-foreground sm:hidden">
+                                Stock: {product.variants.reduce((acc, v) => acc + v.stock, 0)}
+                            </div>
+                        </div>
                     )
                 }
             },
@@ -119,7 +127,7 @@ export function ProductsTable({ products }: { products: Product[] }) {
                         return null
                     }
 
-                    return <Badge variant="outline">{status.label}</Badge>
+                    return <Badge variant="outline" className="text-xs hidden sm:inline-flex">{status.label}</Badge>
                 },
                 filterFn: (row, id, value) => {
                     return value.includes(row.getValue(id))
@@ -133,7 +141,7 @@ export function ProductsTable({ products }: { products: Product[] }) {
                 cell: ({ row }) => {
                     const variants = row.original.variants
                     const price = variants[0]?.price ?? 0
-                    return <div className="text-right font-medium">{formatCurrency(price)}</div>
+                    return <div className="text-right font-medium hidden sm:block">{formatCurrency(price)}</div>
                 },
             },
             {
@@ -144,7 +152,7 @@ export function ProductsTable({ products }: { products: Product[] }) {
                 cell: ({ row }) => {
                     const variants = row.original.variants
                     const stock = variants.reduce((acc, v) => acc + v.stock, 0)
-                    return <div className="text-right">{stock}</div>
+                    return <div className="text-right hidden lg:block">{stock}</div>
                 },
             },
             {
@@ -152,17 +160,40 @@ export function ProductsTable({ products }: { products: Product[] }) {
                 header: ({ column }) => (
                     <DataTableColumnHeader column={column} title={t("admin.products.table.createdAt")} />
                 ),
-                cell: ({ row }) => new Date(row.getValue("createdAt")).toLocaleDateString(),
+                cell: ({ row }) => <div className="hidden xl:block">{new Date(row.getValue("createdAt")).toLocaleDateString()}</div>,
             },
             {
                 id: "actions",
                 cell: ({ row }) => {
                     const product = row.original
                     return (
-                        <div>
+                        <div className="flex items-center gap-1">
+                            {/* Mobile: Direct action buttons */}
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-8 w-8 p-0 sm:hidden"
+                                asChild
+                            >
+                                <Link href={`/admin/products/${product.slug}`}>
+                                    <Edit className="h-4 w-4" />
+                                    <span className="sr-only">Edit</span>
+                                </Link>
+                            </Button>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-8 w-8 p-0 text-red-500 hover:text-red-700 sm:hidden"
+                                onClick={() => handleDelete(product.id)}
+                            >
+                                <Trash2 className="h-4 w-4" />
+                                <span className="sr-only">Delete</span>
+                            </Button>
+
+                            {/* Desktop: Dropdown menu */}
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                    <Button variant="ghost" className="h-8 w-8 p-0">
+                                    <Button variant="ghost" className="h-8 w-8 p-0 hidden sm:flex">
                                         <span className="sr-only">Open menu</span>
                                         <MoreHorizontal className="h-4 w-4" />
                                     </Button>

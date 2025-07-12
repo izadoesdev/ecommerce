@@ -31,22 +31,25 @@ export function SidebarNav({ isMobile = false }: { isMobile?: boolean }) {
 
     return (
         <TooltipProvider>
-            <nav className={cn("grid items-start gap-1 px-2 text-sm font-medium lg:px-4", isMobile && "gap-2 text-lg font-medium")}>
+            <nav className={cn(
+                "grid items-start gap-1 px-2 text-sm font-medium lg:px-4",
+                isMobile && "gap-2 text-base font-medium px-4"
+            )}>
                 {navLinks.map(({ href, icon: Icon, label, badge, disabled }) => {
                     const isActive = pathname === href
                     const linkClasses = cn(
                         "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
                         isActive && "bg-muted text-primary",
                         disabled && "cursor-not-allowed opacity-50",
-                        isMobile && "mx-[-0.65rem] gap-4 rounded-xl"
+                        isMobile && "mx-[-0.5rem] gap-4 rounded-xl py-3"
                     )
 
                     const linkContent = (
                         <>
                             <Icon className={cn("h-4 w-4", isMobile && "h-5 w-5")} />
-                            {label}
+                            <span className="flex-1">{label}</span>
                             {badge && (
-                                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+                                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs">
                                     {badge}
                                 </Badge>
                             )}

@@ -31,17 +31,26 @@ export default async function ProductEditPage({
         }
 
         return (
-            <Card>
-                <CardHeader>
-                    <CardTitle>Edit Product</CardTitle>
-                    <CardDescription>
+            <div className="flex flex-col gap-4 sm:gap-6">
+                <div className="flex flex-col gap-2 px-4 sm:px-0">
+                    <h1 className="text-lg font-semibold sm:text-xl lg:text-2xl">Edit Product</h1>
+                    <p className="text-sm text-muted-foreground">
                         Update the details for &quot;{product.name}&quot;.
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <ProductForm product={product} categories={categories} />
-                </CardContent>
-            </Card>
+                    </p>
+                </div>
+
+                <Card className="sm:mx-0 sm:rounded-lg sm:border">
+                    <CardHeader className="pb-4 px-4 sm:px-6">
+                        <CardTitle className="text-base sm:text-lg">Product Details</CardTitle>
+                        <CardDescription>
+                            Make changes to the product information below.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="p-4 sm:p-6">
+                        <ProductForm product={product} categories={categories} />
+                    </CardContent>
+                </Card>
+            </div>
         )
     } catch (error) {
         console.error("Error loading product:", error)
