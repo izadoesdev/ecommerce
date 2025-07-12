@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { PlusCircle } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 import {
     Sheet,
@@ -12,9 +11,9 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
+import { ProductForm } from "./product-form"
 import { useTranslation } from "@/lib/i18n/client"
 import type { getCategories } from "./actions"
-import { ProductForm } from "./product-form"
 
 type Categories = Awaited<ReturnType<typeof getCategories>>
 
@@ -30,18 +29,22 @@ export function AddProductSheet({ categories }: { categories: Categories }) {
                     <span className="hidden sm:inline">
                         {t("admin.products.add")}
                     </span>
-                    <span className="sm:hidden">Add</span>
+                    <span className="sm:hidden">Add Product</span>
                 </Button>
             </SheetTrigger>
-            <SheetContent className="overflow-y-auto w-full sm:max-w-md">
+            <SheetContent className="overflow-y-auto w-full sm:max-w-2xl">
                 <SheetHeader>
-                    <SheetTitle>{t("admin.products.form.sheetTitle")}</SheetTitle>
+                    <SheetTitle>Add New Product</SheetTitle>
                     <SheetDescription>
-                        {t("admin.products.form.sheetDescription")}
+                        Fill in the details below to add a new product.
                     </SheetDescription>
                 </SheetHeader>
+
                 <div className="mt-6">
-                    <ProductForm categories={categories} onSuccess={() => setOpen(false)} />
+                    <ProductForm
+                        categories={categories}
+                        onSuccess={() => setOpen(false)}
+                    />
                 </div>
             </SheetContent>
         </Sheet>

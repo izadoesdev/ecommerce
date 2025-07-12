@@ -8,6 +8,7 @@ import {
     CircleUser,
     Menu,
     Package2,
+    Loader2,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -20,8 +21,58 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Skeleton } from "@/components/ui/skeleton"
 import { SidebarNav } from "./_components/sidebar-nav";
 import { useTranslation } from "@/lib/i18n/client";
+
+function LoadingSkeleton() {
+    return (
+        <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
+            {/* Desktop Sidebar Skeleton */}
+            <div className="hidden border-r bg-muted/40 lg:block">
+                <div className="flex h-full max-h-screen flex-col gap-2">
+                    <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+                        <div className="flex items-center gap-2">
+                            <Skeleton className="h-6 w-6" />
+                            <Skeleton className="h-4 w-24" />
+                        </div>
+                        <Skeleton className="ml-auto h-8 w-8" />
+                    </div>
+                    <div className="flex-1 p-4">
+                        <div className="space-y-2">
+                            {Array.from({ length: 5 }).map((_, i) => (
+                                <Skeleton key={i} className="h-10 w-full" />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Mobile Layout Skeleton */}
+            <div className="flex flex-col overflow-hidden">
+                <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+                    <Skeleton className="h-8 w-8 lg:hidden" />
+                    <div className="flex items-center gap-2">
+                        <Skeleton className="h-5 w-5 lg:hidden" />
+                        <Skeleton className="h-4 w-16 lg:hidden" />
+                    </div>
+                    <div className="w-full flex-1" />
+                    <Skeleton className="h-8 w-8 rounded-full" />
+                </header>
+                <main className="flex flex-1 flex-col gap-4 p-0 sm:gap-6 sm:p-4 lg:p-6 overflow-auto">
+                    <div className="space-y-4">
+                        <Skeleton className="h-8 w-48" />
+                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                            {Array.from({ length: 4 }).map((_, i) => (
+                                <Skeleton key={i} className="h-32" />
+                            ))}
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    )
+}
 
 export default function AdminLayout({
     children,
@@ -32,8 +83,13 @@ export default function AdminLayout({
     const { t } = useTranslation();
 
     if (session.isPending) {
-        return <div>Loading...</div>;
+        return <LoadingSkeleton />;
     }
+
+    if (!session.data?.user) {
+        redirect("/login");
+    }
+
     if (session.data?.user?.role !== "admin") {
         redirect("/");
     }
